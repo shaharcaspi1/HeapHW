@@ -11,6 +11,12 @@ public class Heap
     public final boolean lazyMelds;
     public final boolean lazyDecreaseKeys;
     public HeapNode min;
+    private int totalLinks;
+    private int totalCuts;
+    private int totalHeapifyUp;
+    private int numMarkedModes;
+    private int size;
+
     
     /**
      *
@@ -24,6 +30,7 @@ public class Heap
         // student code can be added here
     }
 
+
     /**
      * 
      * pre: key > 0
@@ -32,8 +39,13 @@ public class Heap
      *
      */
     public HeapNode insert(int key, String info) 
-    {    
-        return null; // should be replaced by student code
+    {
+        HeapNode newNode = new HeapNode(key, info);
+        Heap newHeap = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
+        newHeap.min = newNode;
+        newHeap.size = 1;
+        this.meld(newHeap);
+        return newNode;
     }
 
     /**
@@ -43,7 +55,7 @@ public class Heap
      */
     public HeapNode findMin()
     {
-        return null; // should be replaced by student code
+        return this.min; // should be replaced by student code
     }
 
     /**
@@ -87,7 +99,32 @@ public class Heap
      */
     public void meld(Heap heap2)
     {
-        return; // should be replaced by student code           
+        // update the fields
+        this.size = this.size + heap2.size;
+        this.totalCuts = this.totalCuts + heap2.totalCuts;
+        this.totalHeapifyUp = this.totalHeapifyUp + heap2.totalHeapifyUp;
+        this.totalLinks = this.totalLinks + heap2.totalLinks;
+
+        /// lazy meld
+        // connect the heaps through minimums
+        HeapNode m1 = this.min;
+        HeapNode m2 = heap2.min;
+        m1.prev.next = m2.next;
+        m2.next.prev = m1.prev;
+        m1.prev = m2;
+        m2.next = m1;
+
+        // update min to min between 2 heaps
+        this.min = Integer.compare(this.min.key, heap2.min.key) < 0 ? this.min : heap2.min;
+
+        /// not lazy meld
+        if(!this.lazyMelds){
+            this.successiveLinking();
+        }
+        
+
+        
+        return;
     }
     
     
@@ -120,7 +157,7 @@ public class Heap
      */
     public int numMarkedNodes()
     {
-        return 46; // should be replaced by student code
+        return this.numMarkedModes; // should be replaced by student code
     }
     
     
@@ -131,7 +168,7 @@ public class Heap
      */
     public int totalLinks()
     {
-        return 46; // should be replaced by student code
+        return this.totalLinks; // should be replaced by student code
     }
     
     
@@ -142,7 +179,7 @@ public class Heap
      */
     public int totalCuts()
     {
-        return 46; // should be replaced by student code
+        return this.totalCuts; // should be replaced by student code
     }
     
 
@@ -153,10 +190,66 @@ public class Heap
      */
     public int totalHeapifyCosts()
     {
-        return 46; // should be replaced by student code
+        return this.totalHeapifyUp; // should be replaced by student code
+    }   
+    
+
+    /**
+     * 
+     * successive link the roots of the heap
+     * 
+     */
+    private void successiveLinking(){
+        if(this.size == 0){
+            return;
+        }
+        // get the size of the array and build array size of log n (size)
+        int logN = 2 * (31 - Integer.numberOfLeadingZeros(this.size) + 1);
+        HeapNode[] arr = new HeapNode[logN];
+
+        // init vars for looping on roots
+        HeapNode startNode = this.min;
+        HeapNode currNode = startNode;
+        HeapNode nextNode = startNode.next;
+
+        /// successive linking
+        do {
+            nextNode = currNode.next;
+            int currRank = currNode.rank;
+            if(arr[currRank] == null){
+                arr[currRank] = currNode;
+            } else {
+                while(arr[currRank] != null){
+                    // find smaller and bigger
+                    HeapNode smaller = Integer.compare(arr[currRank].key, currNode.key) <= 0 ? arr[currRank] : currNode;
+                    HeapNode bigger = Integer.compare(arr[currRank].key, currNode.key) > 0 ? arr[currRank] : currNode;
+    
+                    arr[currRank] = null;                
+                    // disconnecting from roots list
+                    bigger.next.prev = bigger.prev;
+                    bigger.prev.next = bigger.next;
+                    // adding to smaller childs list
+                    if(smaller.child != null){
+                        bigger.prev = smaller.child.prev;
+                        bigger.next = smaller.child;
+                        smaller.child.prev.next = bigger;
+                        smaller.child.prev = bigger;
+                    }
+                    // connect to smaller as parent
+                    bigger.parent = smaller;
+                    smaller.child = bigger;
+                    smaller.rank++;
+
+                    currNode = smaller;
+                    currRank = smaller.rank;
+                } 
+                arr[currRank] = currNode;   
+            }
+            currNode = nextNode;
+        } while (currNode != startNode);
+        
     }
-    
-    
+
     /**
      * Class implementing a node in a ExtendedFibonacci Heap.
      *  
@@ -169,5 +262,15 @@ public class Heap
         public HeapNode prev;
         public HeapNode parent;
         public int rank;
+
+        public HeapNode(int key, String info){
+            this.key = key;
+            this.info = info;
+            this.child = null;
+            this.next = this;
+            this.prev = this;
+            this.parent = null;
+            this.rank = 0;
+        }
     }
 }
