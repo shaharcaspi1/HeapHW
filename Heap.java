@@ -16,6 +16,7 @@ public class Heap
     private int totalHeapifyUp;
     private int numMarkedModes;
     private int size;
+    private int numOfTrees;
 
     
     /**
@@ -76,7 +77,28 @@ public class Heap
      * 
      */
     public void decreaseKey(HeapNode x, int diff) 
-    {    
+    {   
+        // if x is root
+        if(x.parent == null){
+            x.key = x.key - diff;
+            return;
+        // if x is not root
+        } else {
+            // if heap order doesn't break decrease key and return
+            if (x.key - diff > x.parent.key) {
+                x.key = x.key - diff;
+                return;
+            }
+            /// not lazy decrease keys
+            if (!lazyDecreaseKeys){
+                // heapify up
+                while (x.parent != null && x.key < x.parent.key){
+                    x.changeParentChild();
+                    this.totalHeapifyUp++;
+                }
+            }
+
+        }
         return; // should be replaced by student code
     }
 
@@ -135,7 +157,7 @@ public class Heap
      */
     public int size()
     {
-        return 46; // should be replaced by student code
+        return this.size; // should be replaced by student code
     }
 
 
@@ -146,7 +168,7 @@ public class Heap
      */
     public int numTrees()
     {
-        return 46; // should be replaced by student code
+        return this.numOfTrees; // should be replaced by student code
     }
     
     
@@ -262,6 +284,7 @@ public class Heap
         public HeapNode prev;
         public HeapNode parent;
         public int rank;
+        public boolean isMarked;
 
         public HeapNode(int key, String info){
             this.key = key;
@@ -271,6 +294,41 @@ public class Heap
             this.prev = this;
             this.parent = null;
             this.rank = 0;
+        }
+
+        /**
+         * change node (this) and this.parent positions
+         */
+        private void changeParentChild(){
+
+            // new pointers for this.parents
+            HeapNode thisOldParent = this.parent;
+            HeapNode thisOldChild = this.child;
+            HeapNode thisOldPrev = (this.prev != this) ? this.prev : this.parent;
+            HeapNode thisOldNext = (this.next != this) ? this.next : this.parent;
+
+            // new pointers for this
+            HeapNode thisNewParent = this.parent.parent;
+            HeapNode thisNewPrev = (this.parent.prev != this.parent) ? this.parent.prev : this;
+            HeapNode thisNewNext = (this.parent.next != this.parent) ? this.parent.next : this;
+
+            // save ranks for exchange
+            int thisNewRank = this.rank;
+            int thisOldRank = thisOldParent.rank;
+
+            // change pointers
+            this.child = this.parent;
+            this.parent = thisNewParent;
+            this.next = thisNewNext;
+            this.prev = thisNewPrev;
+            thisOldParent.child = thisOldChild;
+            thisOldParent.parent = this;
+            thisOldParent.next = thisOldNext;
+            thisOldParent.prev = thisOldPrev;
+
+            // change ranks
+            this.rank = thisNewRank;
+            thisOldParent.rank = thisOldRank;
         }
     }
 }
