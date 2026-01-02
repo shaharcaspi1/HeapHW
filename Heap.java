@@ -66,7 +66,25 @@ public class Heap
      */
     public void deleteMin()
     {
-        return; // should be replaced by student code
+        // disconnect min node from roots list
+        this.min.next.prev = this.min.prev;
+        this.min.prev.next = this.min.next;
+
+        // create new heap from nim childs
+        Heap oldMinChilds = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
+        HeapNode temp = this.min.child;
+        oldMinChilds.min = temp.findMinInList();
+        oldMinChilds.numOfTrees = min.rank;
+
+        // meld two lists
+        this.meld(oldMinChilds);
+
+        // succesive linking
+        this.successiveLinking();
+
+        // update size
+        this.size--;
+
     }
 
     /**
@@ -109,7 +127,8 @@ public class Heap
      */
     public void delete(HeapNode x) 
     {    
-        return; // should be replaced by student code
+        this.decreaseKey(x, Integer.MIN_VALUE);
+        this.deleteMin();
     }
 
 
@@ -126,6 +145,7 @@ public class Heap
         this.totalCuts = this.totalCuts + heap2.totalCuts;
         this.totalHeapifyUp = this.totalHeapifyUp + heap2.totalHeapifyUp;
         this.totalLinks = this.totalLinks + heap2.totalLinks;
+        this.numOfTrees = this.numOfTrees + heap2.numOfTrees;
 
         /// lazy meld
         // connect the heaps through minimums
@@ -242,6 +262,10 @@ public class Heap
                 arr[currRank] = currNode;
             } else {
                 while(arr[currRank] != null){
+                    /// link the two trees
+                    this.numOfTrees--;
+                    this.totalLinks++;
+                    
                     // find smaller and bigger
                     HeapNode smaller = Integer.compare(arr[currRank].key, currNode.key) <= 0 ? arr[currRank] : currNode;
                     HeapNode bigger = Integer.compare(arr[currRank].key, currNode.key) > 0 ? arr[currRank] : currNode;
@@ -329,6 +353,30 @@ public class Heap
             // change ranks
             this.rank = thisNewRank;
             thisOldParent.rank = thisOldRank;
+        }
+
+        /**
+         * helping function to find a minimum from node childs 
+         * and disconnect all the childs from the previous parent
+         * 
+         * used in deleteMin
+         */
+        private HeapNode findMinInList(){
+            // disconnect from parent
+            this.parent = null;
+            
+            // find min in list
+            HeapNode currMin = this;
+            HeapNode temp = this.next;
+            // loop on double linked list to find minimum
+            while(temp != this) { 
+                temp.parent = null; // disconnect temp from parent
+                if (temp.key < currMin.key){
+                    currMin = temp;
+                }
+                temp = temp.next;
+            }
+            return currMin;
         }
     }
 }
