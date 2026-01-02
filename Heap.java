@@ -67,7 +67,16 @@ public class Heap
      */
     public void deleteMin()
     {
+        // update size
+        this.size--;
+        //if only one node
+        if(size == 0)
+        {
+            this.min = null;
+            return;
+        }
         // disconnect min node from roots list
+        HeapNode someRoot = min.next;
         this.min.next.prev = this.min.prev;
         this.min.prev.next = this.min.next;
         this.min.next = null;
@@ -76,6 +85,13 @@ public class Heap
         // create new heap from nim childs
         Heap oldMinChilds = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
         HeapNode temp = this.min.child;
+        //if min had no children
+        if(temp == null){
+            this.min = someRoot.findMinInList();
+            return;
+        }
+        temp.parent.child = null;
+        temp.parent = null;
         oldMinChilds.min = temp.findMinInList();
         oldMinChilds.numOfTrees = min.rank;
 
@@ -85,8 +101,6 @@ public class Heap
         // succesive linking
         this.successiveLinking();
 
-        // update size
-        this.size--;
 
     }
 
@@ -150,6 +164,12 @@ public class Heap
         this.totalLinks = this.totalLinks + heap2.totalLinks;
         this.numOfTrees = this.numOfTrees + heap2.numOfTrees;
 
+        if(this.min == null || heap2.min == null){
+            if(heap2.min == null)
+                return;
+            this.min = heap2.min;
+            return;
+        }
         /// lazy meld
         // connect the heaps through minimums
         HeapNode m1 = this.min;
@@ -364,11 +384,7 @@ public class Heap
          * 
          * used in deleteMin
          */
-        private HeapNode findMinInList(){
-            // disconnect from parent
-            this.parent.child = null;
-            this.parent = null;
-            
+        private HeapNode findMinInList(){         
             // find min in list
             HeapNode currMin = this;
             HeapNode temp = this.next;
