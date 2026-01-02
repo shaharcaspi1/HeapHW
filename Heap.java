@@ -45,6 +45,7 @@ public class Heap
         Heap newHeap = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
         newHeap.min = newNode;
         newHeap.size = 1;
+        newHeap.numOfTrees = 1;
         this.meld(newHeap);
         return newNode;
     }
