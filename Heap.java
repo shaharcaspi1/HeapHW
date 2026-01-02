@@ -69,6 +69,8 @@ public class Heap
         // disconnect min node from roots list
         this.min.next.prev = this.min.prev;
         this.min.prev.next = this.min.next;
+        this.min.next = null;
+        this.min.prev = null;
 
         // create new heap from nim childs
         Heap oldMinChilds = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
@@ -363,6 +365,7 @@ public class Heap
          */
         private HeapNode findMinInList(){
             // disconnect from parent
+            this.parent.child = null;
             this.parent = null;
             
             // find min in list
