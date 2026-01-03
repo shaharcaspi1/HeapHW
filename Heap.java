@@ -28,7 +28,7 @@ public class Heap
     {
         this.lazyMelds = lazyMelds;
         this.lazyDecreaseKeys = lazyDecreaseKeys;
-        // student code can be added here
+        
     }
 
 
@@ -82,21 +82,22 @@ public class Heap
         this.min.next = this.min;
         this.min.prev = this.min;
 
-        // create new heap from nim childs
-        Heap oldMinChilds = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
-        HeapNode temp = this.min.child;
-        //if min had no children
-        if(temp == null){
-            this.min = someRoot.findMinInList();
-            return;
+        HeapNode oldMin = this.min;
+        this.min = someRoot.findMinInList();
+        // create new heap from min childs
+        HeapNode temp = oldMin.child;
+        //if old min had children
+        if(temp != null){
+            Heap oldMinChilds = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
+            temp.parent.child = null;
+            temp.parent = null;
+            oldMinChilds.min = temp.findMinInList();
+            oldMinChilds.numOfTrees = oldMin.rank;
+            // meld two lists
+            this.meld(oldMinChilds);
         }
-        temp.parent.child = null;
-        temp.parent = null;
-        oldMinChilds.min = temp.findMinInList();
-        oldMinChilds.numOfTrees = min.rank;
+       
 
-        // meld two lists
-        this.meld(oldMinChilds);
 
         // succesive linking
         this.successiveLinking();
@@ -418,11 +419,11 @@ public class Heap
             HeapNode thisNewNext = (this.parent.next != this.parent) ? this.parent.next : this;
 
             // save ranks for exchange
-            int thisNewRank = this.rank;
-            int thisOldRank = thisOldParent.rank;
+            int thisOldRank = this.rank;
+            int thisNewRank = thisOldParent.rank;
 
             // change pointers
-            this.child = this.parent;
+            this.child = thisOldParent;
             this.parent = thisNewParent;
             this.next = thisNewNext;
             this.prev = thisNewPrev;
@@ -431,6 +432,14 @@ public class Heap
             thisOldParent.next = thisOldNext;
             thisOldParent.prev = thisOldPrev;
 
+            if(thisNewParent != null){
+                thisNewParent.child = this;
+            }
+
+            thisOldPrev.next = thisOldParent;
+            thisOldNext.prev = thisOldParent;
+            thisNewPrev.next = this;
+            thisNewNext.prev = this;
             // change ranks
             this.rank = thisNewRank;
             thisOldParent.rank = thisOldRank;
