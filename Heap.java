@@ -79,8 +79,8 @@ public class Heap
         HeapNode someRoot = min.next;
         this.min.next.prev = this.min.prev;
         this.min.prev.next = this.min.next;
-        this.min.next = null;
-        this.min.prev = null;
+        this.min.next = this.min;
+        this.min.prev = this.min;
 
         // create new heap from nim childs
         Heap oldMinChilds = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
@@ -116,12 +116,17 @@ public class Heap
         // if x is root
         if(x.parent == null){
             x.key = x.key - diff;
+            if(x.key < this.min.key){
+                this.min = x;
+            }
             return;
+        
         // if x is not root
         } else {
+            // update key
+            x.key = x.key - diff;
             // if heap order doesn't break decrease key and return
-            if (x.key - diff > x.parent.key) {
-                x.key = x.key - diff;
+            if (x.key > x.parent.key) {
                 return;
             }
             /// not lazy decrease keys
@@ -131,7 +136,14 @@ public class Heap
                     x.changeParentChild();
                     this.totalHeapifyUp++;
                 }
+                if(x.key < this.min.key){
+                   this.min = x;
+                }
+            } else { /// lazy decrease keys
+                this.cascadingCut(x);
             }
+           
+            
 
         }
         return; 
@@ -297,6 +309,8 @@ public class Heap
                     // disconnecting from roots list
                     bigger.next.prev = bigger.prev;
                     bigger.prev.next = bigger.next;
+                    bigger.next = bigger;
+                    bigger.prev = bigger;
                     // adding to smaller childs list
                     if(smaller.child != null){
                         bigger.prev = smaller.child.prev;
@@ -320,6 +334,49 @@ public class Heap
     }
 
     /**
+     * cascading cuts function for decrease key
+     */
+    public void cascadingCut(HeapNode node){
+        // stop condition - root
+        if(node.parent == null) return;
+
+        // disconnect from tree
+        HeapNode parent = node.parent;
+        HeapNode parentNewChild = node.next == node ? null : node.next;
+        parent.rank--;
+        parent.child = parentNewChild;
+        node.parent = null;
+        node.next.prev = node.prev;
+        node.prev.next = node.next;
+        node.next = node;
+        node.prev = node;
+
+        // create heap for meld
+        Heap nodeHeap = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
+        nodeHeap.min = node;
+        nodeHeap.numOfTrees = 1;
+        this.meld(nodeHeap);
+        // add 1 to total cuts
+        this.totalCuts++;
+
+        // stop condition - parent not marked
+        if(!parent.isMarked){
+            parent.isMarked = true;
+            this.numMarkedModes++;
+            return;
+        }
+
+        // remove from marked nodes total
+        // update parent mark
+        this.numMarkedModes--;
+        parent.isMarked = false;
+
+        // recursive call
+        cascadingCut(parent);
+    }
+
+
+    /**
      * Class implementing a node in a ExtendedFibonacci Heap.
      *  
      */
@@ -341,6 +398,7 @@ public class Heap
             this.prev = this;
             this.parent = null;
             this.rank = 0;
+            this.isMarked = false;
         }
 
         /**
