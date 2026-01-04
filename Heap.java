@@ -73,6 +73,7 @@ public class Heap
         if(size == 0)
         {
             this.min = null;
+            this.numOfTrees = 0;
             return;
         }
         // disconnect min node from roots list
@@ -81,6 +82,7 @@ public class Heap
         this.min.prev.next = this.min.next;
         this.min.next = this.min;
         this.min.prev = this.min;
+        this.numOfTrees--;
 
         HeapNode oldMin = this.min;
         this.min = someRoot.findMinInList();
@@ -330,7 +332,7 @@ public class Heap
                 arr[currRank] = currNode;   
             }
             currNode = nextNode;
-        } while (currNode != startNode);
+        } while (nextNode != startNode);
         
     }
 
@@ -410,36 +412,73 @@ public class Heap
             // new pointers for this.parents
             HeapNode thisOldParent = this.parent;
             HeapNode thisOldChild = this.child;
-            HeapNode thisOldPrev = (this.prev != this) ? this.prev : this.parent;
-            HeapNode thisOldNext = (this.next != this) ? this.next : this.parent;
+            HeapNode thisOldPrev = this.prev ;
+            HeapNode thisOldNext = this.next;
 
             // new pointers for this
             HeapNode thisNewParent = this.parent.parent;
-            HeapNode thisNewPrev = (this.parent.prev != this.parent) ? this.parent.prev : this;
-            HeapNode thisNewNext = (this.parent.next != this.parent) ? this.parent.next : this;
+            HeapNode thisNewPrev =this.parent.prev;
+            HeapNode thisNewNext = this.parent.next;
 
             // save ranks for exchange
             int thisOldRank = this.rank;
             int thisNewRank = thisOldParent.rank;
 
-            // change pointers
-            this.child = thisOldParent;
+            // Disconnect this from its siblings
+            if (thisOldPrev != this) {
+                thisOldPrev.next = thisOldNext;
+                thisOldNext.prev = thisOldPrev;
+            }
+
+            // this takes parent's position
             this.parent = thisNewParent;
             this.next = thisNewNext;
             this.prev = thisNewPrev;
-            thisOldParent.child = thisOldChild;
-            thisOldParent.parent = this;
-            thisOldParent.next = thisOldNext;
-            thisOldParent.prev = thisOldPrev;
-
-            if(thisNewParent != null){
+            
+            if (thisNewParent != null) {
                 thisNewParent.child = this;
             }
+            if (thisNewPrev != thisOldParent) {
+                thisNewPrev.next = this;
+            }
+            if (thisNewNext != thisOldParent) {
+                thisNewNext.prev = this;
+            }
 
-            thisOldPrev.next = thisOldParent;
-            thisOldNext.prev = thisOldParent;
-            thisNewPrev.next = this;
-            thisNewNext.prev = this;
+            // parent becomes child of this
+            thisOldParent.parent = this;
+            thisOldParent.next = thisOldParent;
+            thisOldParent.prev = thisOldParent;
+
+            // parent gets this's old children
+            thisOldParent.child = thisOldChild;
+            if (thisOldChild != null) {
+                HeapNode child = thisOldChild;
+                do {
+                    child.parent = thisOldParent;
+                    child = child.next;
+                } while (child != thisOldChild);
+            }
+
+            // this gets parent's other children
+            if (thisOldPrev != this) {
+                // this had siblings - they become children of this, along with parent
+                this.child = thisOldParent;
+                thisOldParent.next = thisOldNext;
+                thisOldParent.prev = thisOldPrev;
+                thisOldPrev.next = thisOldParent;
+                thisOldNext.prev = thisOldParent;
+                // Update parent pointers for old siblings
+                HeapNode s = thisOldNext;
+                while (s != thisOldParent) {
+                    s.parent = this;
+                    s = s.next;
+                }
+            } else {
+                // this was only child - parent is only child of this
+                this.child = thisOldParent;
+            }
+            
             // change ranks
             this.rank = thisNewRank;
             thisOldParent.rank = thisOldRank;
@@ -447,7 +486,6 @@ public class Heap
 
         /**
          * helping function to find a minimum from node childs 
-         * and disconnect all the childs from the previous parent
          * 
          * used in deleteMin
          */
