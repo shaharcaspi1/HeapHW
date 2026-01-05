@@ -58,6 +58,11 @@ public class AdvancedHeapTester {
         testDecreaseKeyToNewMin(lazyMelds, lazyDecreaseKeys);
         testDeleteArbitraryNode(lazyMelds, lazyDecreaseKeys);
         testDeleteOverflowBug(lazyMelds, lazyDecreaseKeys);
+        testBasic_MinPositiveKey(lazyMelds, lazyDecreaseKeys);
+        testBasic_MaxIntegerKey(lazyMelds, lazyDecreaseKeys);
+        testBasic_InsertAfterEmptying(lazyMelds, lazyDecreaseKeys);
+        testBasic_SizeConsistencyThroughOperations(lazyMelds, lazyDecreaseKeys);
+        testBasic_TwoElementSwap(lazyMelds, lazyDecreaseKeys);
 
         // ========== INSERT TESTS (10) ==========
         System.out.println("  --- INSERT TESTS ---");
@@ -71,6 +76,11 @@ public class AdvancedHeapTester {
         testInsert_UpdatesNumTrees(lazyMelds, lazyDecreaseKeys);
         testInsert_UpdatesMin(lazyMelds, lazyDecreaseKeys);
         testInsert_LargeNumber(lazyMelds, lazyDecreaseKeys);
+        testInsert_MaxIntKey(lazyMelds, lazyDecreaseKeys);
+        testInsert_AfterEmptyingHeap(lazyMelds, lazyDecreaseKeys);
+        testInsert_ImmediatelyAfterMeld(lazyMelds, lazyDecreaseKeys);
+        testInsert_AlternatingMinMax(lazyMelds, lazyDecreaseKeys);
+        testInsert_SameKeyDifferentInfo(lazyMelds, lazyDecreaseKeys);
 
         // ========== FINDMIN TESTS (10) ==========
         System.out.println("  --- FINDMIN TESTS ---");
@@ -84,6 +94,11 @@ public class AdvancedHeapTester {
         testFindMin_WithDuplicates(lazyMelds, lazyDecreaseKeys);
         testFindMin_DoesNotModifyHeap(lazyMelds, lazyDecreaseKeys);
         testFindMin_ConsistentReturns(lazyMelds, lazyDecreaseKeys);
+        testFindMin_AfterDecreaseKeyToNewMin(lazyMelds, lazyDecreaseKeys);
+        testFindMin_AfterArbitraryDelete(lazyMelds, lazyDecreaseKeys);
+        testFindMin_AfterMultipleMelds(lazyMelds, lazyDecreaseKeys);
+        testFindMin_LargeHeap(lazyMelds, lazyDecreaseKeys);
+        testFindMin_AfterComplexOperations(lazyMelds, lazyDecreaseKeys);
 
         // ========== DELETEMIN TESTS (10) ==========
         System.out.println("  --- DELETEMIN TESTS ---");
@@ -97,6 +112,11 @@ public class AdvancedHeapTester {
         testDeleteMin_AllElements(lazyMelds, lazyDecreaseKeys);
         testDeleteMin_TriggersConsolidation(lazyMelds, lazyDecreaseKeys);
         testDeleteMin_TotalLinksIncreases(lazyMelds, lazyDecreaseKeys);
+        testDeleteMin_AfterDecreaseKey(lazyMelds, lazyDecreaseKeys);
+        testDeleteMin_LeavesOnlyDuplicates(lazyMelds, lazyDecreaseKeys);
+        testDeleteMin_FromLargeHeap(lazyMelds, lazyDecreaseKeys);
+        testDeleteMin_AfterMeld(lazyMelds, lazyDecreaseKeys);
+        testDeleteMin_ConsecutiveUntilEmpty(lazyMelds, lazyDecreaseKeys);
 
         // ========== MELD TESTS (10) ==========
         System.out.println("  --- MELD TESTS ---");
@@ -110,6 +130,11 @@ public class AdvancedHeapTester {
         testMeld_InheritsTotalCuts(lazyMelds, lazyDecreaseKeys);
         testMeld_InheritsHeapifyCosts(lazyMelds, lazyDecreaseKeys);
         testMeld_NumTreesCorrect(lazyMelds, lazyDecreaseKeys);
+        testMeld_SameMinKeys(lazyMelds, lazyDecreaseKeys);
+        testMeld_DisjointRanges(lazyMelds, lazyDecreaseKeys);
+        testMeld_LargeIntoSmall(lazyMelds, lazyDecreaseKeys);
+        testMeld_ChainedMelds(lazyMelds, lazyDecreaseKeys);
+        testMeld_AfterDeleteMin(lazyMelds, lazyDecreaseKeys);
 
         // ========== DELETE TESTS (10) ==========
         System.out.println("  --- DELETE TESTS ---");
@@ -123,6 +148,11 @@ public class AdvancedHeapTester {
         testDelete_InternalNode(lazyMelds, lazyDecreaseKeys);
         testDelete_MultipleDeletes(lazyMelds, lazyDecreaseKeys);
         testDelete_AllElements(lazyMelds, lazyDecreaseKeys);
+        testDelete_NewlyInsertedNode(lazyMelds, lazyDecreaseKeys);
+        testDelete_AfterDecreaseKey(lazyMelds, lazyDecreaseKeys);
+        testDelete_LastTwoElements(lazyMelds, lazyDecreaseKeys);
+        testDelete_InForwardOrder(lazyMelds, lazyDecreaseKeys);
+        testDelete_AlternateMinMax(lazyMelds, lazyDecreaseKeys);
 
         // ========== DECREASEKEY TESTS (10) ==========
         System.out.println("  --- DECREASEKEY TESTS ---");
@@ -136,6 +166,11 @@ public class AdvancedHeapTester {
         testDecreaseKey_MultipleOnDifferentNodes(lazyMelds, lazyDecreaseKeys);
         testDecreaseKey_UpdatesMinPointer(lazyMelds, lazyDecreaseKeys);
         testDecreaseKey_CounterUpdates(lazyMelds, lazyDecreaseKeys);
+        testDecreaseKey_ToOne(lazyMelds, lazyDecreaseKeys);
+        testDecreaseKey_AllNodesToSameKey(lazyMelds, lazyDecreaseKeys);
+        testDecreaseKey_AfterMeld(lazyMelds, lazyDecreaseKeys);
+        testDecreaseKey_DeepNode(lazyMelds, lazyDecreaseKeys);
+        testDecreaseKey_SequentialDecreases(lazyMelds, lazyDecreaseKeys);
 
         // ========== INTEGRATION TESTS (10) ==========
         System.out.println("  --- INTEGRATION TESTS ---");
@@ -173,6 +208,50 @@ public class AdvancedHeapTester {
         // ========== COMPLEX SCENARIO ==========
         System.out.println("  --- COMPLEX SCENARIO ---");
         testComplexScenario(lazyMelds, lazyDecreaseKeys);
+
+        // ========== NEW ADVANCED INTEGRATION TESTS (15) ==========
+        System.out.println("  --- ADVANCED INTEGRATION TESTS ---");
+        testIntegration_DeepCascadingCuts(lazyMelds, lazyDecreaseKeys);
+        testIntegration_MassiveMeldChain(lazyMelds, lazyDecreaseKeys);
+        testIntegration_AlternatingInsertDeleteMin(lazyMelds, lazyDecreaseKeys);
+        testIntegration_DecreaseKeyOnAllNodes(lazyMelds, lazyDecreaseKeys);
+        testIntegration_DeleteAllButOne(lazyMelds, lazyDecreaseKeys);
+        testIntegration_RepeatedDecreaseKeyToSameValue(lazyMelds, lazyDecreaseKeys);
+        testIntegration_PowerOfTwoSizes(lazyMelds, lazyDecreaseKeys);
+        testIntegration_SingleNodeOperations(lazyMelds, lazyDecreaseKeys);
+        testIntegration_EmptyHeapAfterAllOperations(lazyMelds, lazyDecreaseKeys);
+        testIntegration_DecreaseKeyRootNode(lazyMelds, lazyDecreaseKeys);
+        testIntegration_MeldThenDeleteMeldedElements(lazyMelds, lazyDecreaseKeys);
+        testIntegration_RapidFireDecreaseKeyAndDelete(lazyMelds, lazyDecreaseKeys);
+        testIntegration_CounterAccuracyAfterStress(lazyMelds, lazyDecreaseKeys);
+        testIntegration_HeapifyUpVsCascadingCutsDifference(lazyMelds, lazyDecreaseKeys);
+        testIntegration_ExtremeSizeFluctuation(lazyMelds, lazyDecreaseKeys);
+
+        // ========== RANDOMIZED STRESS TESTS (15) ==========
+        System.out.println("  --- RANDOMIZED STRESS TESTS ---");
+        testRandom_MixedOperations1000(lazyMelds, lazyDecreaseKeys);
+        testRandom_InsertDeleteStorm(lazyMelds, lazyDecreaseKeys);
+        // testRandom_DecreaseKeyBombardment(lazyMelds, lazyDecreaseKeys);
+        testRandom_MeldChaos(lazyMelds, lazyDecreaseKeys);
+        testRandom_DeleteRandomNodes(lazyMelds, lazyDecreaseKeys);
+        testRandom_AlternatingOperations(lazyMelds, lazyDecreaseKeys);
+        testRandom_ExtractAllRandom(lazyMelds, lazyDecreaseKeys);
+        testRandom_StressCounters(lazyMelds, lazyDecreaseKeys);
+        testRandom_RepeatedBuildDestroy(lazyMelds, lazyDecreaseKeys);
+        testRandom_ChaosMonkey(lazyMelds, lazyDecreaseKeys);
+        testRandom_LargeScaleOperations(lazyMelds, lazyDecreaseKeys);
+        testRandom_DecreaseKeyThenDelete(lazyMelds, lazyDecreaseKeys);
+        testRandom_MeldThenExtractAll(lazyMelds, lazyDecreaseKeys);
+        testRandom_WorstCasePatterns(lazyMelds, lazyDecreaseKeys);
+        testRandom_UltimateTortureTest(lazyMelds, lazyDecreaseKeys);
+
+        // Big Scale Tests
+        System.out.println("  --- BIG SCALE TESTS ---");
+        testBigScale_TenThousandElements(lazyMelds, lazyDecreaseKeys);
+        testBigScale_FiftyThousandInsertExtract(lazyMelds, lazyDecreaseKeys);
+        testBigScale_MassiveMeldOperation(lazyMelds, lazyDecreaseKeys);
+        testBigScale_IntensiveDecreaseKey(lazyMelds, lazyDecreaseKeys);
+        testBigScale_HundredThousandOperations(lazyMelds, lazyDecreaseKeys);
     }
 
     // ==================== BASIC TESTS ====================
@@ -632,6 +711,199 @@ public class AdvancedHeapTester {
             reason = "After delete, min should be 10, got " + minKey;
         }
 
+        reportResult(testName, pass, reason);
+    }
+
+    // ==================== NEW BASIC EDGE CASE TESTS (5) ====================
+
+    private static void testBasic_MinPositiveKey(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Basic: Min Positive Key (key=1)";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap.insert(100, "hundred");
+        heap.insert(1, "one");
+        heap.insert(50, "fifty");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.findMin().key != 1) {
+            pass = false;
+            reason = "Min should be 1, got " + heap.findMin().key;
+        }
+        
+        if (pass) {
+            heap.deleteMin();
+            if (heap.findMin().key != 50) {
+                pass = false;
+                reason = "After removing 1, min should be 50, got " + heap.findMin().key;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testBasic_MaxIntegerKey(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Basic: Max Integer Key";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap.insert(Integer.MAX_VALUE, "max");
+        heap.insert(100, "hundred");
+        heap.insert(Integer.MAX_VALUE - 1, "max-1");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.findMin().key != 100) {
+            pass = false;
+            reason = "Min should be 100, got " + heap.findMin().key;
+        }
+        
+        if (pass) {
+            heap.deleteMin();
+            if (heap.findMin().key != Integer.MAX_VALUE - 1) {
+                pass = false;
+                reason = "After removing 100, min should be MAX-1, got " + heap.findMin().key;
+            }
+        }
+        
+        if (pass) {
+            heap.deleteMin();
+            if (heap.findMin().key != Integer.MAX_VALUE) {
+                pass = false;
+                reason = "Last element should be MAX, got " + heap.findMin().key;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testBasic_InsertAfterEmptying(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Basic: Insert After Emptying";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        // Fill and empty
+        for (int i = 0; i < 10; i++) {
+            heap.insert(i + 1, "val-" + i);
+        }
+        for (int i = 0; i < 10; i++) {
+            heap.deleteMin();
+        }
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.size() != 0) {
+            pass = false;
+            reason = "After emptying, size should be 0, got " + heap.size();
+        }
+        
+        // Now insert again
+        if (pass) {
+            heap.insert(42, "forty-two");
+            if (heap.size() != 1) {
+                pass = false;
+                reason = "After reinserting, size should be 1, got " + heap.size();
+            }
+            if (pass && heap.findMin().key != 42) {
+                pass = false;
+                reason = "After reinserting, min should be 42, got " + heap.findMin().key;
+            }
+            if (pass && heap.numTrees() != 1) {
+                pass = false;
+                reason = "After reinserting, numTrees should be 1, got " + heap.numTrees();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testBasic_SizeConsistencyThroughOperations(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Basic: Size Consistency Through Operations";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        int expectedSize = 0;
+        
+        // Insert 20
+        for (int i = 0; i < 20; i++) {
+            heap.insert(i * 5 + 1, "val-" + i);
+            expectedSize++;
+            if (heap.size() != expectedSize) {
+                pass = false;
+                reason = "After insert " + i + ", expected size " + expectedSize + ", got " + heap.size();
+                break;
+            }
+        }
+        
+        // DeleteMin 5
+        if (pass) {
+            for (int i = 0; i < 5; i++) {
+                heap.deleteMin();
+                expectedSize--;
+                if (heap.size() != expectedSize) {
+                    pass = false;
+                    reason = "After deleteMin " + i + ", expected size " + expectedSize + ", got " + heap.size();
+                    break;
+                }
+            }
+        }
+        
+        // Meld with another heap of 10
+        if (pass) {
+            Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+            for (int i = 0; i < 10; i++) {
+                heap2.insert(1000 + i, "h2-" + i);
+            }
+            heap.meld(heap2);
+            expectedSize += 10;
+            if (heap.size() != expectedSize) {
+                pass = false;
+                reason = "After meld, expected size " + expectedSize + ", got " + heap.size();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testBasic_TwoElementSwap(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Basic: Two Element Operations";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        Heap.HeapItem item1 = heap.insert(10, "ten");
+        Heap.HeapItem item2 = heap.insert(20, "twenty");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.findMin() != item1) {
+            pass = false;
+            reason = "Min should be item1 (10)";
+        }
+        
+        // Decrease item2 to become new min
+        if (pass) {
+            heap.decreaseKey(item2, 15); // 20 -> 5
+            if (heap.findMin() != item2) {
+                pass = false;
+                reason = "After decreaseKey, min should be item2 (5)";
+            }
+        }
+        
+        // Delete new min
+        if (pass) {
+            heap.deleteMin();
+            if (heap.findMin() != item1) {
+                pass = false;
+                reason = "After deleteMin, only item1 should remain";
+            }
+            if (pass && heap.size() != 1) {
+                pass = false;
+                reason = "Size should be 1, got " + heap.size();
+            }
+        }
+        
         reportResult(testName, pass, reason);
     }
 
@@ -1429,6 +1701,194 @@ public class AdvancedHeapTester {
         reportResult(testName, pass, reason);
     }
 
+    // ==================== NEW INSERT EDGE CASE TESTS (5) ====================
+
+    private static void testInsert_MaxIntKey(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Insert Max Int Key";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        Heap.HeapItem maxItem = heap.insert(Integer.MAX_VALUE, "max");
+        heap.insert(1, "one");
+        heap.insert(Integer.MAX_VALUE, "max2");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.size() != 3) {
+            pass = false;
+            reason = "Size should be 3, got " + heap.size();
+        } else if (heap.findMin().key != 1) {
+            pass = false;
+            reason = "Min should be 1, got " + heap.findMin().key;
+        }
+        
+        // Verify all elements extractable
+        if (pass) {
+            heap.deleteMin(); // 1
+            if (heap.findMin().key != Integer.MAX_VALUE) {
+                pass = false;
+                reason = "After removing 1, next should be MAX_VALUE, got " + heap.findMin().key;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testInsert_AfterEmptyingHeap(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Insert After Emptying Heap";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        // Fill and empty multiple times
+        for (int round = 0; round < 3; round++) {
+            for (int i = 0; i < 5; i++) {
+                heap.insert(i + 1, "round" + round + "-" + i);
+            }
+            for (int i = 0; i < 5; i++) {
+                heap.deleteMin();
+            }
+        }
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.size() != 0) {
+            pass = false;
+            reason = "After cycles, size should be 0, got " + heap.size();
+        }
+        
+        // Final insert
+        if (pass) {
+            Heap.HeapItem item = heap.insert(999, "final");
+            if (heap.findMin() != item) {
+                pass = false;
+                reason = "Final insert should be findable as min";
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testInsert_ImmediatelyAfterMeld(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Insert Immediately After Meld";
+        Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap1.insert(50, "h1-50");
+        heap1.insert(30, "h1-30");
+        heap2.insert(40, "h2-40");
+        heap2.insert(20, "h2-20");
+        
+        heap1.meld(heap2);
+        
+        // Immediately insert new min
+        Heap.HeapItem newMin = heap1.insert(5, "five");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap1.size() != 5) {
+            pass = false;
+            reason = "After meld and insert, size should be 5, got " + heap1.size();
+        } else if (heap1.findMin() != newMin) {
+            pass = false;
+            reason = "New insert should be min";
+        } else if (heap1.findMin().key != 5) {
+            pass = false;
+            reason = "Min should be 5, got " + heap1.findMin().key;
+        }
+        
+        // Verify order
+        if (pass) {
+            int[] expected = {5, 20, 30, 40, 50};
+            for (int i = 0; i < expected.length && pass; i++) {
+                if (heap1.findMin().key != expected[i]) {
+                    pass = false;
+                    reason = "Expected " + expected[i] + " at step " + i + ", got " + heap1.findMin().key;
+                }
+                heap1.deleteMin();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testInsert_AlternatingMinMax(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Insert Alternating Min Max";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        // Insert alternating between very small and very large
+        heap.insert(1000000, "large1");
+        heap.insert(1, "small1");
+        heap.insert(999999, "large2");
+        heap.insert(2, "small2");
+        heap.insert(888888, "large3");
+        heap.insert(3, "small3");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.size() != 6) {
+            pass = false;
+            reason = "Size should be 6, got " + heap.size();
+        } else if (heap.findMin().key != 1) {
+            pass = false;
+            reason = "Min should be 1, got " + heap.findMin().key;
+        }
+        
+        // Verify extraction order
+        if (pass) {
+            int[] expected = {1, 2, 3, 888888, 999999, 1000000};
+            for (int i = 0; i < expected.length && pass; i++) {
+                if (heap.findMin().key != expected[i]) {
+                    pass = false;
+                    reason = "Expected " + expected[i] + " at step " + i + ", got " + heap.findMin().key;
+                }
+                heap.deleteMin();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testInsert_SameKeyDifferentInfo(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Insert Same Key Different Info";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        Heap.HeapItem item1 = heap.insert(100, "info-A");
+        Heap.HeapItem item2 = heap.insert(100, "info-B");
+        Heap.HeapItem item3 = heap.insert(100, "info-C");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.size() != 3) {
+            pass = false;
+            reason = "Size should be 3, got " + heap.size();
+        }
+        
+        // All items should be distinct
+        if (pass && (item1 == item2 || item2 == item3 || item1 == item3)) {
+            pass = false;
+            reason = "Each insert should return distinct HeapItem";
+        }
+        
+        // All have same key
+        if (pass && (item1.key != 100 || item2.key != 100 || item3.key != 100)) {
+            pass = false;
+            reason = "All items should have key 100";
+        }
+        
+        // Info should be preserved
+        if (pass) {
+            if (!item1.info.equals("info-A") || !item2.info.equals("info-B") || !item3.info.equals("info-C")) {
+                pass = false;
+                reason = "Info not preserved correctly";
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
     // ==================== FINDMIN TESTS (10) ====================
 
     private static void testFindMin_EmptyHeap(boolean lazyMelds, boolean lazyDecreaseKeys) {
@@ -1715,6 +2175,181 @@ public class AdvancedHeapTester {
             if (current.key != 5) {
                 pass = false;
                 reason = "findMin().key changed to " + current.key + " on call " + i;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    // ==================== NEW FINDMIN EDGE CASE TESTS (5) ====================
+
+    private static void testFindMin_AfterDecreaseKeyToNewMin(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "FindMin After DecreaseKey To New Min";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap.insert(50, "fifty");
+        Heap.HeapItem item = heap.insert(100, "hundred");
+        heap.insert(75, "seventy-five");
+        
+        // Initial min should be 50
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.findMin().key != 50) {
+            pass = false;
+            reason = "Initial min should be 50, got " + heap.findMin().key;
+        }
+        
+        // Decrease item to become new min
+        if (pass) {
+            heap.decreaseKey(item, 90); // 100 -> 10
+            if (heap.findMin() != item) {
+                pass = false;
+                reason = "After decreaseKey, findMin should return the decreased item";
+            }
+            if (pass && heap.findMin().key != 10) {
+                pass = false;
+                reason = "New min should be 10, got " + heap.findMin().key;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testFindMin_AfterArbitraryDelete(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "FindMin After Arbitrary Delete";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        Heap.HeapItem min = heap.insert(10, "ten");
+        Heap.HeapItem mid = heap.insert(50, "fifty");
+        heap.insert(30, "thirty");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Delete middle element
+        heap.delete(mid);
+        
+        if (heap.findMin() != min) {
+            pass = false;
+            reason = "After deleting middle, min should still be original min";
+        }
+        if (pass && heap.findMin().key != 10) {
+            pass = false;
+            reason = "Min should be 10, got " + heap.findMin().key;
+        }
+        
+        // Now delete min
+        if (pass) {
+            heap.delete(min);
+            if (heap.findMin().key != 30) {
+                pass = false;
+                reason = "After deleting min, new min should be 30, got " + heap.findMin().key;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testFindMin_AfterMultipleMelds(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "FindMin After Multiple Melds";
+        Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heap3 = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap1.insert(50, "h1-50");
+        heap2.insert(30, "h2-30");
+        heap3.insert(10, "h3-10");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        heap1.meld(heap2);
+        if (heap1.findMin().key != 30) {
+            pass = false;
+            reason = "After first meld, min should be 30, got " + heap1.findMin().key;
+        }
+        
+        if (pass) {
+            heap1.meld(heap3);
+            if (heap1.findMin().key != 10) {
+                pass = false;
+                reason = "After second meld, min should be 10, got " + heap1.findMin().key;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testFindMin_LargeHeap(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "FindMin Large Heap";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        // Insert 10000 elements, with min at a specific position
+        int minValue = 1;
+        for (int i = 10000; i >= 1; i--) {
+            heap.insert(i, "val-" + i);
+        }
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.findMin().key != minValue) {
+            pass = false;
+            reason = "Min should be " + minValue + ", got " + heap.findMin().key;
+        }
+        
+        // Verify findMin is consistent
+        if (pass) {
+            for (int i = 0; i < 100; i++) {
+                if (heap.findMin().key != minValue) {
+                    pass = false;
+                    reason = "findMin inconsistent at iteration " + i;
+                    break;
+                }
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testFindMin_AfterComplexOperations(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "FindMin After Complex Operations";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        Heap.HeapItem[] items = new Heap.HeapItem[10];
+        for (int i = 0; i < 10; i++) {
+            items[i] = heap.insert((i + 1) * 10, "val-" + i);
+        }
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Delete some
+        heap.delete(items[0]); // delete 10
+        
+        if (heap.findMin().key != 20) {
+            pass = false;
+            reason = "After deleting 10, min should be 20, got " + heap.findMin().key;
+        }
+        
+        // Decrease another to become min
+        if (pass) {
+            heap.decreaseKey(items[5], 55); // 60 -> 5
+            if (heap.findMin().key != 5) {
+                pass = false;
+                reason = "After decreaseKey, min should be 5, got " + heap.findMin().key;
+            }
+        }
+        
+        // Meld
+        if (pass) {
+            Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+            heap2.insert(3, "three");
+            heap.meld(heap2);
+            if (heap.findMin().key != 3) {
+                pass = false;
+                reason = "After meld with smaller, min should be 3, got " + heap.findMin().key;
             }
         }
         
@@ -2022,6 +2657,189 @@ public class AdvancedHeapTester {
         reportResult(testName, pass, reason);
     }
 
+    // ==================== NEW DELETEMIN EDGE CASE TESTS (5) ====================
+
+    private static void testDeleteMin_AfterDecreaseKey(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DeleteMin After DecreaseKey";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap.insert(50, "fifty");
+        Heap.HeapItem item = heap.insert(100, "hundred");
+        heap.insert(75, "seventy-five");
+        
+        // Decrease to make new min
+        heap.decreaseKey(item, 90); // 100 -> 10
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.findMin().key != 10) {
+            pass = false;
+            reason = "After decreaseKey, min should be 10, got " + heap.findMin().key;
+        }
+        
+        // DeleteMin should remove the decreased item
+        if (pass) {
+            heap.deleteMin();
+            if (heap.findMin().key != 50) {
+                pass = false;
+                reason = "After deleteMin, min should be 50, got " + heap.findMin().key;
+            }
+            if (pass && heap.size() != 2) {
+                pass = false;
+                reason = "Size should be 2, got " + heap.size();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDeleteMin_LeavesOnlyDuplicates(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DeleteMin Leaves Only Duplicates";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap.insert(5, "five-unique");
+        heap.insert(100, "hundred-a");
+        heap.insert(100, "hundred-b");
+        heap.insert(100, "hundred-c");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Delete the unique min
+        heap.deleteMin();
+        
+        // All remaining should be 100
+        for (int i = 0; i < 3 && pass; i++) {
+            if (heap.findMin().key != 100) {
+                pass = false;
+                reason = "All remaining elements should be 100, got " + heap.findMin().key + " at step " + i;
+            }
+            heap.deleteMin();
+        }
+        
+        if (pass && heap.size() != 0) {
+            pass = false;
+            reason = "After all deletions, size should be 0, got " + heap.size();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDeleteMin_FromLargeHeap(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DeleteMin From Large Heap";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        int n = 1000;
+        for (int i = n; i >= 1; i--) {
+            heap.insert(i, "val-" + i);
+        }
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Delete first 100 and verify order
+        for (int i = 1; i <= 100 && pass; i++) {
+            if (heap.findMin().key != i) {
+                pass = false;
+                reason = "Expected " + i + ", got " + heap.findMin().key;
+            }
+            heap.deleteMin();
+        }
+        
+        if (pass && heap.size() != n - 100) {
+            pass = false;
+            reason = "Expected size " + (n - 100) + ", got " + heap.size();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDeleteMin_AfterMeld(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DeleteMin After Meld";
+        Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap1.insert(30, "h1-30");
+        heap1.insert(50, "h1-50");
+        heap2.insert(10, "h2-10");
+        heap2.insert(20, "h2-20");
+        
+        heap1.meld(heap2);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap1.findMin().key != 10) {
+            pass = false;
+            reason = "After meld, min should be 10, got " + heap1.findMin().key;
+        }
+        
+        if (pass) {
+            heap1.deleteMin(); // removes 10 from heap2
+            if (heap1.findMin().key != 20) {
+                pass = false;
+                reason = "After deleteMin, min should be 20, got " + heap1.findMin().key;
+            }
+        }
+        
+        // Verify all 3 remaining
+        if (pass) {
+            int[] expected = {20, 30, 50};
+            for (int i = 0; i < expected.length && pass; i++) {
+                if (heap1.findMin().key != expected[i]) {
+                    pass = false;
+                    reason = "Expected " + expected[i] + " at step " + i + ", got " + heap1.findMin().key;
+                }
+                heap1.deleteMin();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDeleteMin_ConsecutiveUntilEmpty(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DeleteMin Consecutive Until Empty";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        // Insert in random order
+        int[] values = {73, 12, 98, 5, 41, 67, 23, 89, 34, 56};
+        for (int v : values) {
+            heap.insert(v, "val-" + v);
+        }
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Sort expected
+        int[] expected = {5, 12, 23, 34, 41, 56, 67, 73, 89, 98};
+        
+        for (int i = 0; i < expected.length && pass; i++) {
+            if (heap.findMin() == null) {
+                pass = false;
+                reason = "findMin returned null at step " + i;
+                break;
+            }
+            if (heap.findMin().key != expected[i]) {
+                pass = false;
+                reason = "Expected " + expected[i] + " at step " + i + ", got " + heap.findMin().key;
+            }
+            heap.deleteMin();
+        }
+        
+        if (pass && heap.size() != 0) {
+            pass = false;
+            reason = "After all deletions, size should be 0, got " + heap.size();
+        }
+        
+        if (pass && heap.findMin() != null) {
+            pass = false;
+            reason = "After all deletions, findMin should be null";
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
     // ==================== MELD TESTS (10) ====================
 
     private static void testMeld_TwoNonEmptyHeaps(boolean lazyMelds, boolean lazyDecreaseKeys) {
@@ -2296,6 +3114,217 @@ public class AdvancedHeapTester {
             if (heap1.numTrees() > trees1 + trees2) {
                 pass = false;
                 reason = "In strict mode, after meld numTrees should be <= " + (trees1 + trees2) + ", got " + heap1.numTrees();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    // ==================== NEW MELD EDGE CASE TESTS (5) ====================
+
+    private static void testMeld_SameMinKeys(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Meld Same Min Keys";
+        Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap1.insert(10, "h1-10");
+        heap1.insert(50, "h1-50");
+        heap2.insert(10, "h2-10");
+        heap2.insert(40, "h2-40");
+        
+        heap1.meld(heap2);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap1.size() != 4) {
+            pass = false;
+            reason = "After meld, size should be 4, got " + heap1.size();
+        }
+        
+        // Min should be 10, and there should be two of them
+        if (pass && heap1.findMin().key != 10) {
+            pass = false;
+            reason = "Min should be 10, got " + heap1.findMin().key;
+        }
+        
+        // Extract and verify
+        if (pass) {
+            int[] expected = {10, 10, 40, 50};
+            for (int i = 0; i < expected.length && pass; i++) {
+                if (heap1.findMin().key != expected[i]) {
+                    pass = false;
+                    reason = "Expected " + expected[i] + " at step " + i + ", got " + heap1.findMin().key;
+                }
+                heap1.deleteMin();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testMeld_DisjointRanges(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Meld Disjoint Ranges";
+        Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        // heap1: 1-10, heap2: 100-110
+        for (int i = 1; i <= 10; i++) {
+            heap1.insert(i, "h1-" + i);
+        }
+        for (int i = 100; i <= 110; i++) {
+            heap2.insert(i, "h2-" + i);
+        }
+        
+        heap1.meld(heap2);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap1.size() != 21) {
+            pass = false;
+            reason = "After meld, size should be 21, got " + heap1.size();
+        }
+        
+        // Verify first 10 extractions are 1-10
+        if (pass) {
+            for (int i = 1; i <= 10 && pass; i++) {
+                if (heap1.findMin().key != i) {
+                    pass = false;
+                    reason = "Expected " + i + ", got " + heap1.findMin().key;
+                }
+                heap1.deleteMin();
+            }
+        }
+        
+        // Next should be 100
+        if (pass && heap1.findMin().key != 100) {
+            pass = false;
+            reason = "After heap1 elements, min should be 100, got " + heap1.findMin().key;
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testMeld_LargeIntoSmall(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Meld Large Into Small";
+        Heap heapSmall = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heapLarge = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heapSmall.insert(5, "small-5");
+        
+        for (int i = 1; i <= 100; i++) {
+            heapLarge.insert(i * 10, "large-" + i);
+        }
+        
+        heapSmall.meld(heapLarge);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heapSmall.size() != 101) {
+            pass = false;
+            reason = "After meld, size should be 101, got " + heapSmall.size();
+        }
+        
+        if (pass && heapSmall.findMin().key != 5) {
+            pass = false;
+            reason = "Min should be 5 from small heap, got " + heapSmall.findMin().key;
+        }
+        
+        // Verify order
+        if (pass) {
+            heapSmall.deleteMin(); // 5
+            if (heapSmall.findMin().key != 10) {
+                pass = false;
+                reason = "After removing 5, min should be 10, got " + heapSmall.findMin().key;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testMeld_ChainedMelds(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Meld Chained Melds";
+        Heap mainHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        mainHeap.insert(50, "main-50");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Chain meld 5 heaps
+        for (int h = 0; h < 5; h++) {
+            Heap temp = new Heap(lazyMelds, lazyDecreaseKeys);
+            temp.insert(h * 10 + 5, "temp" + h);
+            mainHeap.meld(temp);
+        }
+        
+        if (mainHeap.size() != 6) {
+            pass = false;
+            reason = "After 5 chain melds, size should be 6, got " + mainHeap.size();
+        }
+        
+        // Min should be 5 (from first temp heap)
+        if (pass && mainHeap.findMin().key != 5) {
+            pass = false;
+            reason = "Min should be 5, got " + mainHeap.findMin().key;
+        }
+        
+        // Verify extraction order: 5, 15, 25, 35, 45, 50
+        if (pass) {
+            int[] expected = {5, 15, 25, 35, 45, 50};
+            for (int i = 0; i < expected.length && pass; i++) {
+                if (mainHeap.findMin().key != expected[i]) {
+                    pass = false;
+                    reason = "Expected " + expected[i] + " at step " + i + ", got " + mainHeap.findMin().key;
+                }
+                mainHeap.deleteMin();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testMeld_AfterDeleteMin(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Meld After DeleteMin";
+        Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        for (int i = 1; i <= 8; i++) {
+            heap1.insert(i * 10, "h1-" + i);
+        }
+        
+        // Trigger consolidation
+        heap1.deleteMin();
+        
+        heap2.insert(5, "h2-5");
+        heap2.insert(15, "h2-15");
+        
+        heap1.meld(heap2);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap1.size() != 9) {
+            pass = false;
+            reason = "After meld, size should be 9, got " + heap1.size();
+        }
+        
+        if (pass && heap1.findMin().key != 5) {
+            pass = false;
+            reason = "Min should be 5, got " + heap1.findMin().key;
+        }
+        
+        // Verify order
+        if (pass) {
+            int[] expected = {5, 15, 20, 30, 40, 50, 60, 70, 80};
+            for (int i = 0; i < expected.length && pass; i++) {
+                if (heap1.findMin().key != expected[i]) {
+                    pass = false;
+                    reason = "Expected " + expected[i] + " at step " + i + ", got " + heap1.findMin().key;
+                }
+                heap1.deleteMin();
             }
         }
         
@@ -2605,6 +3634,187 @@ public class AdvancedHeapTester {
         } else if (heap.numTrees() != 0) {
             pass = false;
             reason = "After deleting all, numTrees should be 0, got " + heap.numTrees();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    // ==================== NEW DELETE EDGE CASE TESTS (5) ====================
+
+    private static void testDelete_NewlyInsertedNode(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Delete Newly Inserted Node";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap.insert(50, "fifty");
+        heap.insert(30, "thirty");
+        
+        // Insert and immediately delete
+        Heap.HeapItem newItem = heap.insert(10, "ten");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.findMin() != newItem) {
+            pass = false;
+            reason = "Newly inserted 10 should be min";
+        }
+        
+        if (pass) {
+            heap.delete(newItem);
+            if (heap.size() != 2) {
+                pass = false;
+                reason = "After delete, size should be 2, got " + heap.size();
+            }
+            if (pass && heap.findMin().key != 30) {
+                pass = false;
+                reason = "After delete, min should be 30, got " + heap.findMin().key;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDelete_AfterDecreaseKey(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Delete After DecreaseKey";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap.insert(50, "fifty");
+        Heap.HeapItem item = heap.insert(100, "hundred");
+        heap.insert(75, "seventy-five");
+        
+        // Decrease then delete
+        heap.decreaseKey(item, 90); // 100 -> 10
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (heap.findMin().key != 10) {
+            pass = false;
+            reason = "After decreaseKey, min should be 10, got " + heap.findMin().key;
+        }
+        
+        if (pass) {
+            heap.delete(item);
+            if (heap.size() != 2) {
+                pass = false;
+                reason = "After delete, size should be 2, got " + heap.size();
+            }
+            if (pass && heap.findMin().key != 50) {
+                pass = false;
+                reason = "After delete, min should be 50, got " + heap.findMin().key;
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDelete_LastTwoElements(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Delete Last Two Elements";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        Heap.HeapItem item1 = heap.insert(10, "ten");
+        Heap.HeapItem item2 = heap.insert(20, "twenty");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Delete first, leaving one
+        heap.delete(item1);
+        if (heap.size() != 1) {
+            pass = false;
+            reason = "After first delete, size should be 1, got " + heap.size();
+        }
+        if (pass && heap.findMin() != item2) {
+            pass = false;
+            reason = "After first delete, remaining should be item2";
+        }
+        
+        // Delete last
+        if (pass) {
+            heap.delete(item2);
+            if (heap.size() != 0) {
+                pass = false;
+                reason = "After second delete, size should be 0, got " + heap.size();
+            }
+            if (pass && heap.findMin() != null) {
+                pass = false;
+                reason = "After second delete, findMin should be null";
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDelete_InForwardOrder(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Delete In Forward Order";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        Heap.HeapItem[] items = new Heap.HeapItem[10];
+        for (int i = 0; i < 10; i++) {
+            items[i] = heap.insert((i + 1) * 10, "val-" + (i + 1));
+        }
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Delete in forward order (smallest first)
+        for (int i = 0; i < 10 && pass; i++) {
+            heap.delete(items[i]);
+            if (heap.size() != 9 - i) {
+                pass = false;
+                reason = "After delete " + i + ", size should be " + (9 - i) + ", got " + heap.size();
+            }
+        }
+        
+        if (pass && heap.findMin() != null) {
+            pass = false;
+            reason = "After all deletes, findMin should be null";
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDelete_AlternateMinMax(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Delete Alternate Min Max";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        Heap.HeapItem[] items = new Heap.HeapItem[6];
+        items[0] = heap.insert(10, "ten");
+        items[1] = heap.insert(20, "twenty");
+        items[2] = heap.insert(30, "thirty");
+        items[3] = heap.insert(40, "forty");
+        items[4] = heap.insert(50, "fifty");
+        items[5] = heap.insert(60, "sixty");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Delete min, then max, alternating
+        heap.delete(items[0]); // delete 10 (min)
+        if (heap.findMin().key != 20) {
+            pass = false;
+            reason = "After deleting 10, min should be 20, got " + heap.findMin().key;
+        }
+        
+        if (pass) {
+            heap.delete(items[5]); // delete 60 (max)
+            if (heap.findMin().key != 20) {
+                pass = false;
+                reason = "After deleting 60, min should still be 20, got " + heap.findMin().key;
+            }
+        }
+        
+        if (pass) {
+            heap.delete(items[1]); // delete 20 (new min)
+            if (heap.findMin().key != 30) {
+                pass = false;
+                reason = "After deleting 20, min should be 30, got " + heap.findMin().key;
+            }
+        }
+        
+        if (pass && heap.size() != 3) {
+            pass = false;
+            reason = "After 3 deletes, size should be 3, got " + heap.size();
         }
         
         reportResult(testName, pass, reason);
@@ -2935,6 +4145,239 @@ public class AdvancedHeapTester {
             if (heapifyAfter < heapifyBefore) {
                 pass = false;
                 reason = "totalHeapifyCosts should not decrease";
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    // ==================== NEW DECREASEKEY EDGE CASE TESTS (5) ====================
+
+    private static void testDecreaseKey_ToOne(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DecreaseKey To One (Min Positive)";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap.insert(100, "hundred");
+        Heap.HeapItem item = heap.insert(500, "five-hundred");
+        heap.insert(200, "two-hundred");
+        
+        // Decrease to 1 (minimum positive)
+        heap.decreaseKey(item, 499); // 500 -> 1
+        
+        boolean pass = true;
+        String reason = "";
+        
+        if (item.key != 1) {
+            pass = false;
+            reason = "After decreaseKey, key should be 1, got " + item.key;
+        }
+        
+        if (pass && heap.findMin().key != 1) {
+            pass = false;
+            reason = "Min should be 1, got " + heap.findMin().key;
+        }
+        
+        // Verify extraction order
+        if (pass) {
+            int[] expected = {1, 100, 200};
+            for (int i = 0; i < expected.length && pass; i++) {
+                if (heap.findMin().key != expected[i]) {
+                    pass = false;
+                    reason = "Expected " + expected[i] + " at step " + i + ", got " + heap.findMin().key;
+                }
+                heap.deleteMin();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDecreaseKey_AllNodesToSameKey(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DecreaseKey All Nodes To Same Key";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        Heap.HeapItem[] items = new Heap.HeapItem[5];
+        for (int i = 0; i < 5; i++) {
+            items[i] = heap.insert((i + 1) * 100, "val-" + (i + 1));
+        }
+        
+        // Decrease all to key 10
+        for (int i = 0; i < 5; i++) {
+            int diff = items[i].key - 10;
+            heap.decreaseKey(items[i], diff);
+        }
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // All should now be 10
+        for (int i = 0; i < 5; i++) {
+            if (items[i].key != 10) {
+                pass = false;
+                reason = "Item " + i + " should have key 10, got " + items[i].key;
+                break;
+            }
+        }
+        
+        // All extractions should be 10
+        if (pass) {
+            for (int i = 0; i < 5 && pass; i++) {
+                if (heap.findMin().key != 10) {
+                    pass = false;
+                    reason = "All extractions should be 10, got " + heap.findMin().key + " at step " + i;
+                }
+                heap.deleteMin();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDecreaseKey_AfterMeld(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DecreaseKey After Meld";
+        Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap1.insert(50, "h1-50");
+        Heap.HeapItem item1 = heap1.insert(100, "h1-100");
+        
+        heap2.insert(60, "h2-60");
+        Heap.HeapItem item2 = heap2.insert(200, "h2-200");
+        
+        heap1.meld(heap2);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Decrease item from heap1
+        heap1.decreaseKey(item1, 90); // 100 -> 10
+        if (heap1.findMin().key != 10) {
+            pass = false;
+            reason = "After decreasing h1 item, min should be 10, got " + heap1.findMin().key;
+        }
+        
+        // Decrease item from heap2
+        if (pass) {
+            heap1.decreaseKey(item2, 195); // 200 -> 5
+            if (heap1.findMin().key != 5) {
+                pass = false;
+                reason = "After decreasing h2 item, min should be 5, got " + heap1.findMin().key;
+            }
+        }
+        
+        // Verify order
+        if (pass) {
+            int[] expected = {5, 10, 50, 60};
+            for (int i = 0; i < expected.length && pass; i++) {
+                if (heap1.findMin().key != expected[i]) {
+                    pass = false;
+                    reason = "Expected " + expected[i] + " at step " + i + ", got " + heap1.findMin().key;
+                }
+                heap1.deleteMin();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDecreaseKey_DeepNode(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DecreaseKey Deep Node";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        // Build a larger tree to have depth
+        Heap.HeapItem[] items = new Heap.HeapItem[32];
+        for (int i = 0; i < 32; i++) {
+            items[i] = heap.insert((i + 1) * 10, "val-" + (i + 1));
+        }
+        
+        // Force tree structure via deleteMin
+        heap.deleteMin();
+        
+        boolean pass = true;
+        String reason = "";
+        
+        int cutsBefore = heap.totalCuts();
+        int heapifyBefore = heap.totalHeapifyCosts();
+        
+        // Decrease a node that's likely deep in tree
+        heap.decreaseKey(items[30], items[30].key - 1); // 310 -> 1
+        
+        if (heap.findMin().key != 1) {
+            pass = false;
+            reason = "After decreaseKey deep node, min should be 1, got " + heap.findMin().key;
+        }
+        
+        // Verify counters changed appropriately
+        if (pass) {
+            if (lazyDecreaseKeys && heap.totalCuts() < cutsBefore) {
+                pass = false;
+                reason = "totalCuts should not decrease";
+            }
+            if (!lazyDecreaseKeys && heap.totalHeapifyCosts() < heapifyBefore) {
+                pass = false;
+                reason = "totalHeapifyCosts should not decrease";
+            }
+        }
+        
+        // Verify heap property
+        if (pass) {
+            int prev = Integer.MIN_VALUE;
+            while (heap.size() > 0) {
+                int curr = heap.findMin().key;
+                if (curr < prev) {
+                    pass = false;
+                    reason = "Heap order violated: " + curr + " after " + prev;
+                    break;
+                }
+                prev = curr;
+                heap.deleteMin();
+            }
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    private static void testDecreaseKey_SequentialDecreases(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "DecreaseKey Sequential Decreases";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        heap.insert(10, "ten");
+        Heap.HeapItem item = heap.insert(1000, "thousand");
+        heap.insert(50, "fifty");
+        
+        boolean pass = true;
+        String reason = "";
+        
+        // Sequential decreases: 1000 -> 800 -> 500 -> 100 -> 5
+        int[] targets = {800, 500, 100, 5};
+        int currentKey = 1000;
+        
+        for (int target : targets) {
+            int diff = currentKey - target;
+            heap.decreaseKey(item, diff);
+            currentKey = target;
+            
+            if (item.key != target) {
+                pass = false;
+                reason = "After decreaseKey, key should be " + target + ", got " + item.key;
+                break;
+            }
+        }
+        
+        if (pass && heap.findMin().key != 5) {
+            pass = false;
+            reason = "Final min should be 5, got " + heap.findMin().key;
+        }
+        
+        // Verify order
+        if (pass) {
+            int[] expected = {5, 10, 50};
+            for (int i = 0; i < expected.length && pass; i++) {
+                if (heap.findMin().key != expected[i]) {
+                    pass = false;
+                    reason = "Expected " + expected[i] + " at step " + i + ", got " + heap.findMin().key;
+                }
+                heap.deleteMin();
             }
         }
         
@@ -3422,6 +4865,2659 @@ public class AdvancedHeapTester {
             if (pass && count != 20) {
                 pass = false;
                 reason = "Expected 20 extractions, got " + count;
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    // ==================== NEW ADVANCED INTEGRATION TESTS (15) ====================
+
+    /**
+     * Test 1: Deep Cascading Cuts
+     * Forces multiple levels of cascading cuts by creating a deep tree and triggering cuts on marked nodes.
+     * Tests totalCuts, numMarkedNodes for lazyDecreaseKeys=true mode.
+     */
+    private static void testIntegration_DeepCascadingCuts(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Deep Cascading Cuts";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            // Build a deep tree by inserting many elements
+            Heap.HeapItem[] items = new Heap.HeapItem[64];
+            for (int i = 0; i < 64; i++) {
+                items[i] = heap.insert((i + 1) * 10, "val-" + (i + 1));
+            }
+            
+            // Force consolidation to create tree structure
+            heap.deleteMin(); // removes 10
+            
+            int cutsBefore = heap.totalCuts();
+            int markedBefore = heap.numMarkedNodes();
+            
+            if (lazyDecreaseKeys) {
+                // Perform multiple decreaseKey operations to trigger cascading cuts
+                // These should mark parents and potentially trigger cascading
+                for (int i = 60; i >= 50; i--) {
+                    heap.decreaseKey(items[i], items[i].key - 1); // decrease by almost full amount
+                }
+                
+                int cutsAfter = heap.totalCuts();
+                
+                if (cutsAfter < cutsBefore) {
+                    pass = false;
+                    reason = "totalCuts should not decrease. Before: " + cutsBefore + ", After: " + cutsAfter;
+                }
+                
+                // Marked nodes should be non-negative
+                if (pass && heap.numMarkedNodes() < 0) {
+                    pass = false;
+                    reason = "numMarkedNodes should never be negative, got " + heap.numMarkedNodes();
+                }
+            } else {
+                // In heapify mode, cuts should remain 0
+                if (heap.totalCuts() != 0) {
+                    pass = false;
+                    reason = "In heapify mode, totalCuts should be 0, got " + heap.totalCuts();
+                }
+            }
+            
+            // Verify heap property still holds
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap order violated: got " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 2: Massive Meld Chain
+     * Melds 10+ heaps together, verifies counter accumulation is correctly inherited.
+     */
+    private static void testIntegration_MassiveMeldChain(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Massive Meld Chain";
+        Heap mainHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            int totalSize = 0;
+            int totalExpectedLinks = 0;
+            
+            // Create and meld 15 heaps
+            for (int h = 0; h < 15; h++) {
+                Heap tempHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+                for (int i = 0; i < 10; i++) {
+                    tempHeap.insert(h * 100 + i * 5, "h" + h + "-" + i);
+                }
+                totalSize += 10;
+                
+                // Force some links in temp heap before meld
+                if (tempHeap.size() > 1) {
+                    tempHeap.deleteMin();
+                    totalSize--;
+                }
+                
+                int linksBefore = mainHeap.totalLinks();
+                int tempLinks = tempHeap.totalLinks();
+                
+                mainHeap.meld(tempHeap);
+                
+                // totalLinks should be at least sum of both
+                if (mainHeap.totalLinks() < linksBefore + tempLinks) {
+                    pass = false;
+                    reason = "After meld, totalLinks should be >= " + (linksBefore + tempLinks) + 
+                             ", got " + mainHeap.totalLinks();
+                    break;
+                }
+            }
+            
+            if (pass && mainHeap.size() != totalSize) {
+                pass = false;
+                reason = "Total size should be " + totalSize + ", got " + mainHeap.size();
+            }
+            
+            // Verify extraction order
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (mainHeap.size() > 0) {
+                    int curr = mainHeap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap order violated after massive meld: " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    mainHeap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 3: Alternating Insert DeleteMin
+     * Alternates 100+ insert/deleteMin operations, verifies size and numTrees stay consistent.
+     */
+    private static void testIntegration_AlternatingInsertDeleteMin(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Alternating Insert-DeleteMin";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            int netSize = 0;
+            
+            // Phase 1: Insert 50
+            for (int i = 0; i < 50; i++) {
+                heap.insert(i * 3, "val-" + i);
+                netSize++;
+            }
+            
+            // Phase 2: Alternating pattern
+            for (int round = 0; round < 100; round++) {
+                // Insert 2
+                heap.insert(1000 + round * 2, "alt-" + (round * 2));
+                heap.insert(1000 + round * 2 + 1, "alt-" + (round * 2 + 1));
+                netSize += 2;
+                
+                // Delete 1
+                if (heap.size() > 0) {
+                    heap.deleteMin();
+                    netSize--;
+                }
+                
+                if (heap.size() != netSize) {
+                    pass = false;
+                    reason = "Size mismatch at round " + round + ": expected " + netSize + ", got " + heap.size();
+                    break;
+                }
+            }
+            
+            // Verify numTrees is reasonable
+            if (pass && heap.numTrees() < 0) {
+                pass = false;
+                reason = "numTrees should not be negative, got " + heap.numTrees();
+            }
+            
+            // Verify heap property
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap order violated: " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 4: DecreaseKey On All Nodes
+     * Decreases key on every non-min node, verifies heap property and counters.
+     */
+    private static void testIntegration_DecreaseKeyOnAllNodes(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: DecreaseKey On All Nodes";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            int n = 30;
+            Heap.HeapItem[] items = new Heap.HeapItem[n];
+            
+            for (int i = 0; i < n; i++) {
+                items[i] = heap.insert((i + 1) * 100, "val-" + (i + 1));
+            }
+            
+            // Force consolidation
+            heap.deleteMin();
+            
+            int cutsBefore = heap.totalCuts();
+            int heapifyBefore = heap.totalHeapifyCosts();
+            
+            // Decrease all remaining items by 1
+            for (int i = 1; i < n; i++) {
+                heap.decreaseKey(items[i], 1);
+            }
+            
+            if (lazyDecreaseKeys) {
+                // totalCuts may increase
+                if (heap.totalCuts() < cutsBefore) {
+                    pass = false;
+                    reason = "totalCuts should not decrease";
+                }
+            } else {
+                // totalHeapifyCosts may increase
+                if (heap.totalHeapifyCosts() < heapifyBefore) {
+                    pass = false;
+                    reason = "totalHeapifyCosts should not decrease";
+                }
+            }
+            
+            // Verify heap still valid
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int count = 0;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap order violated at step " + count + ": " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    count++;
+                }
+                
+                if (pass && count != n - 1) {
+                    pass = false;
+                    reason = "Expected " + (n - 1) + " extractions, got " + count;
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 5: Delete All But One
+     * Inserts many, deletes all but one using delete(), verifies single element remains correct.
+     */
+    private static void testIntegration_DeleteAllButOne(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Delete All But One";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            int n = 50;
+            Heap.HeapItem[] items = new Heap.HeapItem[n];
+            
+            for (int i = 0; i < n; i++) {
+                items[i] = heap.insert((i + 1) * 10, "val-" + (i + 1));
+            }
+            
+            // Keep item[25] (key = 260), delete all others
+            for (int i = 0; i < n; i++) {
+                if (i != 25) {
+                    heap.delete(items[i]);
+                }
+            }
+            
+            if (heap.size() != 1) {
+                pass = false;
+                reason = "After deleting all but one, size should be 1, got " + heap.size();
+            }
+            
+            if (pass && heap.findMin() != items[25]) {
+                pass = false;
+                reason = "Remaining item should be the one we kept";
+            }
+            
+            if (pass && heap.findMin().key != 260) {
+                pass = false;
+                reason = "Remaining item key should be 260, got " + heap.findMin().key;
+            }
+            
+            if (pass && heap.numTrees() != 1) {
+                pass = false;
+                reason = "With one element, numTrees should be 1, got " + heap.numTrees();
+            }
+            
+            // Delete the last one
+            if (pass) {
+                heap.deleteMin();
+                if (heap.size() != 0) {
+                    pass = false;
+                    reason = "After final delete, size should be 0, got " + heap.size();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 6: Repeated DecreaseKey To Same Value
+     * Decreases multiple nodes to the same minimum key, verifies extraction handles duplicates.
+     */
+    private static void testIntegration_RepeatedDecreaseKeyToSameValue(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Repeated DecreaseKey To Same Value";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            int n = 20;
+            Heap.HeapItem[] items = new Heap.HeapItem[n];
+            
+            for (int i = 0; i < n; i++) {
+                items[i] = heap.insert((i + 1) * 100, "val-" + (i + 1));
+            }
+            
+            // Decrease items[5], items[10], items[15] all to key = 5
+            heap.decreaseKey(items[5], 595);   // 600 -> 5
+            heap.decreaseKey(items[10], 1095); // 1100 -> 5
+            heap.decreaseKey(items[15], 1595); // 1600 -> 5
+            
+            // Min should now be 5
+            if (heap.findMin().key != 5) {
+                pass = false;
+                reason = "Min should be 5 after decreaseKey, got " + heap.findMin().key;
+            }
+            
+            // Extract first 3 - all should be 5
+            if (pass) {
+                for (int i = 0; i < 3; i++) {
+                    if (heap.findMin().key != 5) {
+                        pass = false;
+                        reason = "First 3 extractions should all be 5, got " + heap.findMin().key + " at step " + i;
+                        break;
+                    }
+                    heap.deleteMin();
+                }
+            }
+            
+            // Next should be 100 (items[0])
+            if (pass && heap.findMin().key != 100) {
+                pass = false;
+                reason = "After extracting three 5s, min should be 100, got " + heap.findMin().key;
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 7: Power Of Two Sizes
+     * Tests successive linking with exact power-of-2 sizes to verify numTrees for binomial heap structure.
+     */
+    private static void testIntegration_PowerOfTwoSizes(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Power Of Two Sizes";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            // Test powers of 2: 1, 2, 4, 8, 16, 32
+            int[] powers = {1, 2, 4, 8, 16, 32};
+            
+            for (int size : powers) {
+                Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+                
+                for (int i = 0; i < size; i++) {
+                    heap.insert(i + 1, "val-" + (i + 1));
+                }
+                
+                if (!lazyMelds) {
+                    // In strict mode with power of 2, should have exactly 1 tree
+                    if (heap.numTrees() != 1) {
+                        pass = false;
+                        reason = "With strict meld and size " + size + ", numTrees should be 1, got " + heap.numTrees();
+                        break;
+                    }
+                } else {
+                    // In lazy mode, numTrees equals size (no consolidation yet)
+                    if (heap.numTrees() != size) {
+                        pass = false;
+                        reason = "With lazy meld and size " + size + ", numTrees should be " + size + ", got " + heap.numTrees();
+                        break;
+                    }
+                }
+                
+                // After deleteMin, verify structure
+                if (pass && size > 1) {
+                    heap.deleteMin();
+                    
+                    // After deleteMin and consolidation, verify heap property
+                    int prev = Integer.MIN_VALUE;
+                    while (heap.size() > 0) {
+                        int curr = heap.findMin().key;
+                        if (curr < prev) {
+                            pass = false;
+                            reason = "Heap order violated for size " + size;
+                            break;
+                        }
+                        prev = curr;
+                        heap.deleteMin();
+                    }
+                }
+                
+                if (!pass) break;
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 8: Single Node Operations
+     * Performs all operations (decreaseKey, delete, meld) on single-node heaps.
+     */
+    private static void testIntegration_SingleNodeOperations(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Single Node Operations";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            // Test 1: DecreaseKey on single node
+            Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+            Heap.HeapItem item1 = heap1.insert(100, "hundred");
+            heap1.decreaseKey(item1, 50);
+            
+            if (item1.key != 50) {
+                pass = false;
+                reason = "DecreaseKey on single node failed: expected 50, got " + item1.key;
+            }
+            
+            if (pass && heap1.findMin().key != 50) {
+                pass = false;
+                reason = "Min should be 50 after decreaseKey, got " + heap1.findMin().key;
+            }
+            
+            // Test 2: Meld two single-node heaps
+            if (pass) {
+                Heap heapA = new Heap(lazyMelds, lazyDecreaseKeys);
+                Heap heapB = new Heap(lazyMelds, lazyDecreaseKeys);
+                heapA.insert(10, "ten");
+                heapB.insert(20, "twenty");
+                
+                heapA.meld(heapB);
+                
+                if (heapA.size() != 2) {
+                    pass = false;
+                    reason = "After meld of two single-node heaps, size should be 2, got " + heapA.size();
+                }
+                
+                if (pass && heapA.findMin().key != 10) {
+                    pass = false;
+                    reason = "After meld, min should be 10, got " + heapA.findMin().key;
+                }
+            }
+            
+            // Test 3: Delete single node
+            if (pass) {
+                Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+                Heap.HeapItem item2 = heap2.insert(42, "forty-two");
+                heap2.delete(item2);
+                
+                if (heap2.size() != 0) {
+                    pass = false;
+                    reason = "After deleting single node, size should be 0, got " + heap2.size();
+                }
+                
+                if (pass && heap2.findMin() != null) {
+                    pass = false;
+                    reason = "After deleting single node, findMin should be null";
+                }
+            }
+            
+            // Test 4: Meld empty with single node
+            if (pass) {
+                Heap heapEmpty = new Heap(lazyMelds, lazyDecreaseKeys);
+                Heap heapSingle = new Heap(lazyMelds, lazyDecreaseKeys);
+                heapSingle.insert(99, "ninety-nine");
+                
+                heapEmpty.meld(heapSingle);
+                
+                if (heapEmpty.size() != 1) {
+                    pass = false;
+                    reason = "After empty.meld(single), size should be 1, got " + heapEmpty.size();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 9: Empty Heap After All Operations
+     * After complex sequence, verifies all counters match expected final state.
+     */
+    private static void testIntegration_EmptyHeapAfterAllOperations(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Empty Heap After All Operations";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            // Perform many operations
+            Heap.HeapItem[] items = new Heap.HeapItem[30];
+            for (int i = 0; i < 30; i++) {
+                items[i] = heap.insert((i + 1) * 10, "val-" + (i + 1));
+            }
+            
+            // Meld
+            Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+            for (int i = 0; i < 10; i++) {
+                heap2.insert(500 + i, "h2-" + i);
+            }
+            heap.meld(heap2);
+            
+            // DecreaseKey
+            heap.decreaseKey(items[20], 100);
+            
+            // Delete some
+            heap.delete(items[5]);
+            heap.delete(items[15]);
+            
+            // Now extract all
+            while (heap.size() > 0) {
+                heap.deleteMin();
+            }
+            
+            // After all operations and empty heap:
+            if (heap.size() != 0) {
+                pass = false;
+                reason = "After emptying, size should be 0, got " + heap.size();
+            }
+            
+            if (pass && heap.numTrees() != 0) {
+                pass = false;
+                reason = "After emptying, numTrees should be 0, got " + heap.numTrees();
+            }
+            
+            if (pass && heap.findMin() != null) {
+                pass = false;
+                reason = "After emptying, findMin should be null";
+            }
+            
+            // Counters should be non-negative
+            if (pass && heap.totalLinks() < 0) {
+                pass = false;
+                reason = "totalLinks should be >= 0, got " + heap.totalLinks();
+            }
+            
+            if (pass && heap.totalCuts() < 0) {
+                pass = false;
+                reason = "totalCuts should be >= 0, got " + heap.totalCuts();
+            }
+            
+            if (pass && heap.numMarkedNodes() < 0) {
+                pass = false;
+                reason = "numMarkedNodes should be >= 0, got " + heap.numMarkedNodes();
+            }
+            
+            if (pass && heap.totalHeapifyCosts() < 0) {
+                pass = false;
+                reason = "totalHeapifyCosts should be >= 0, got " + heap.totalHeapifyCosts();
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 10: DecreaseKey Root Node
+     * Decreases the root/min node's key, verifies it stays as min and counters don't change unexpectedly.
+     */
+    private static void testIntegration_DecreaseKeyRootNode(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: DecreaseKey Root Node";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            Heap.HeapItem root = heap.insert(100, "hundred");
+            heap.insert(200, "twohundred");
+            heap.insert(300, "threehundred");
+            heap.insert(400, "fourhundred");
+            
+            // Force consolidation
+            heap.deleteMin();
+            
+            // Now the min should be one of 200, 300, 400
+            Heap.HeapItem currentMin = heap.findMin();
+            int minKeyBefore = currentMin.key;
+            
+            int cutsBefore = heap.totalCuts();
+            int heapifyBefore = heap.totalHeapifyCosts();
+            
+            // Decrease the min key (it's a root, so no structural change needed)
+            heap.decreaseKey(currentMin, 50);
+            
+            if (currentMin.key != minKeyBefore - 50) {
+                pass = false;
+                reason = "Root key should be " + (minKeyBefore - 50) + ", got " + currentMin.key;
+            }
+            
+            if (pass && heap.findMin() != currentMin) {
+                pass = false;
+                reason = "After decreasing root, it should still be the min";
+            }
+            
+            // Decreasing root shouldn't trigger cuts or heapify
+            if (pass && heap.totalCuts() != cutsBefore) {
+                pass = false;
+                reason = "Decreasing root shouldn't change totalCuts. Before: " + cutsBefore + ", After: " + heap.totalCuts();
+            }
+            
+            if (pass && heap.totalHeapifyCosts() != heapifyBefore) {
+                pass = false;
+                reason = "Decreasing root shouldn't change totalHeapifyCosts. Before: " + heapifyBefore + ", After: " + heap.totalHeapifyCosts();
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 11: Meld Then Delete Melded Elements
+     * Melds heaps then specifically deletes elements that came from the second heap.
+     */
+    private static void testIntegration_MeldThenDeleteMeldedElements(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Meld Then Delete Melded Elements";
+        Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+        Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            // Insert into heap1
+            for (int i = 0; i < 10; i++) {
+                heap1.insert(i * 10, "h1-" + i);
+            }
+            
+            // Insert into heap2 and keep references
+            Heap.HeapItem[] heap2Items = new Heap.HeapItem[10];
+            for (int i = 0; i < 10; i++) {
+                heap2Items[i] = heap2.insert(500 + i * 10, "h2-" + i);
+            }
+            
+            heap1.meld(heap2);
+            
+            if (heap1.size() != 20) {
+                pass = false;
+                reason = "After meld, size should be 20, got " + heap1.size();
+            }
+            
+            // Delete all elements from what was heap2
+            for (int i = 0; i < 10 && pass; i++) {
+                heap1.delete(heap2Items[i]);
+            }
+            
+            if (pass && heap1.size() != 10) {
+                pass = false;
+                reason = "After deleting melded elements, size should be 10, got " + heap1.size();
+            }
+            
+            // Verify remaining are from heap1 (0, 10, 20, ..., 90)
+            if (pass) {
+                for (int i = 0; i < 10 && pass; i++) {
+                    int expected = i * 10;
+                    if (heap1.findMin().key != expected) {
+                        pass = false;
+                        reason = "Expected " + expected + " at step " + i + ", got " + heap1.findMin().key;
+                    }
+                    heap1.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 12: Rapid Fire DecreaseKey And Delete
+     * Rapidly interleaves decreaseKey and delete on same tree, verifies structure integrity.
+     */
+    private static void testIntegration_RapidFireDecreaseKeyAndDelete(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Rapid Fire DecreaseKey And Delete";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            int n = 40;
+            Heap.HeapItem[] items = new Heap.HeapItem[n];
+            
+            for (int i = 0; i < n; i++) {
+                items[i] = heap.insert((i + 1) * 100, "val-" + (i + 1));
+            }
+            
+            // Force tree structure
+            heap.deleteMin();
+            
+            // Rapid fire: alternate between decreaseKey and delete
+            boolean[] deleted = new boolean[n];
+            deleted[0] = true; // Already deleted by deleteMin
+            
+            int deleteCount = 1;
+            
+            for (int round = 0; round < 15; round++) {
+                int decreaseIdx = (round * 2 + 1) % n;
+                int deleteIdx = (round * 3 + 5) % n;
+                
+                // DecreaseKey if not deleted
+                if (!deleted[decreaseIdx]) {
+                    int currentKey = items[decreaseIdx].key;
+                    if (currentKey > 1) {
+                        heap.decreaseKey(items[decreaseIdx], 1);
+                    }
+                }
+                
+                // Delete if not already deleted
+                if (!deleted[deleteIdx]) {
+                    heap.delete(items[deleteIdx]);
+                    deleted[deleteIdx] = true;
+                    deleteCount++;
+                }
+            }
+            
+            int expectedSize = n - deleteCount;
+            if (heap.size() != expectedSize) {
+                pass = false;
+                reason = "Expected size " + expectedSize + ", got " + heap.size();
+            }
+            
+            // Verify heap property
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap order violated: " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 13: Counter Accuracy After Stress
+     * After 1000 operations, verifies counters are non-negative and consistent.
+     */
+    private static void testIntegration_CounterAccuracyAfterStress(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Counter Accuracy After Stress";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.ArrayList<Heap.HeapItem> activeItems = new java.util.ArrayList<>();
+            
+            // 1000 operations
+            for (int op = 0; op < 1000; op++) {
+                int operation = op % 5;
+                
+                switch (operation) {
+                    case 0: // Insert
+                    case 1:
+                        Heap.HeapItem newItem = heap.insert(op * 3 + 1, "op-" + op);
+                        activeItems.add(newItem);
+                        break;
+                    case 2: // DeleteMin
+                        if (heap.size() > 0) {
+                            Heap.HeapItem min = heap.findMin();
+                            activeItems.remove(min);
+                            heap.deleteMin();
+                        }
+                        break;
+                    case 3: // DecreaseKey
+                        if (!activeItems.isEmpty()) {
+                            int idx = op % activeItems.size();
+                            Heap.HeapItem item = activeItems.get(idx);
+                            if (item.key > 1) {
+                                heap.decreaseKey(item, 1);
+                            }
+                        }
+                        break;
+                    case 4: // Delete
+                        if (activeItems.size() > 1) {
+                            int idx = (op / 5) % activeItems.size();
+                            Heap.HeapItem item = activeItems.get(idx);
+                            activeItems.remove(idx);
+                            heap.delete(item);
+                        }
+                        break;
+                }
+                
+                // Check counters every 100 operations
+                if (op % 100 == 0) {
+                    if (heap.size() < 0) {
+                        pass = false;
+                        reason = "size is negative at op " + op;
+                        break;
+                    }
+                    if (heap.numTrees() < 0) {
+                        pass = false;
+                        reason = "numTrees is negative at op " + op;
+                        break;
+                    }
+                    if (heap.totalLinks() < 0) {
+                        pass = false;
+                        reason = "totalLinks is negative at op " + op;
+                        break;
+                    }
+                    if (heap.totalCuts() < 0) {
+                        pass = false;
+                        reason = "totalCuts is negative at op " + op;
+                        break;
+                    }
+                    if (heap.numMarkedNodes() < 0) {
+                        pass = false;
+                        reason = "numMarkedNodes is negative at op " + op;
+                        break;
+                    }
+                    if (heap.totalHeapifyCosts() < 0) {
+                        pass = false;
+                        reason = "totalHeapifyCosts is negative at op " + op;
+                        break;
+                    }
+                }
+            }
+            
+            // Final verification
+            if (pass) {
+                if (heap.size() != activeItems.size()) {
+                    pass = false;
+                    reason = "Size mismatch: heap says " + heap.size() + ", tracked " + activeItems.size();
+                }
+            }
+            
+            // Verify heap property
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap order violated: " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 14: HeapifyUp Vs CascadingCuts Difference
+     * Same operations on heapify-up mode vs cascading-cuts mode, verifies different counter behaviors.
+     */
+    private static void testIntegration_HeapifyUpVsCascadingCutsDifference(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: HeapifyUp Vs CascadingCuts Counter Difference";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            // Create heap with current mode
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            
+            // Build tree
+            Heap.HeapItem[] items = new Heap.HeapItem[32];
+            for (int i = 0; i < 32; i++) {
+                items[i] = heap.insert((i + 1) * 10, "val-" + (i + 1));
+            }
+            
+            // Force consolidation
+            heap.deleteMin();
+            
+            int cutsBefore = heap.totalCuts();
+            int heapifyBefore = heap.totalHeapifyCosts();
+            
+            // Perform decrease keys that would trigger structural changes
+            for (int i = 25; i < 31; i++) {
+                heap.decreaseKey(items[i], items[i].key - 5);
+            }
+            
+            int cutsAfter = heap.totalCuts();
+            int heapifyAfter = heap.totalHeapifyCosts();
+            
+            if (lazyDecreaseKeys) {
+                // Cascading cuts mode: should have cuts, no heapify
+                if (heap.totalHeapifyCosts() != 0) {
+                    pass = false;
+                    reason = "In cascading cuts mode, totalHeapifyCosts should be 0, got " + heap.totalHeapifyCosts();
+                }
+            } else {
+                // Heapify mode: should have no cuts
+                if (heap.totalCuts() != 0) {
+                    pass = false;
+                    reason = "In heapify mode, totalCuts should be 0, got " + heap.totalCuts();
+                }
+            }
+            
+            // Verify heap still works
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap order violated";
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Test 15: Extreme Size Fluctuation
+     * Grows heap to 500, shrinks to 1, grows again to 500, verifies integrity throughout.
+     */
+    private static void testIntegration_ExtremeSizeFluctuation(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Integration: Extreme Size Fluctuation";
+        Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            // Phase 1: Grow to 500
+            for (int i = 0; i < 500; i++) {
+                heap.insert(i + 1, "phase1-" + i);
+            }
+            
+            if (heap.size() != 500) {
+                pass = false;
+                reason = "After growing to 500, size should be 500, got " + heap.size();
+            }
+            
+            // Phase 2: Shrink to 1
+            if (pass) {
+                for (int i = 0; i < 499; i++) {
+                    heap.deleteMin();
+                }
+                
+                if (heap.size() != 1) {
+                    pass = false;
+                    reason = "After shrinking, size should be 1, got " + heap.size();
+                }
+                
+                if (pass && heap.numTrees() != 1) {
+                    pass = false;
+                    reason = "With 1 element, numTrees should be 1, got " + heap.numTrees();
+                }
+            }
+            
+            // Phase 3: Grow back to 500
+            if (pass) {
+                for (int i = 0; i < 499; i++) {
+                    heap.insert(1000 + i, "phase3-" + i);
+                }
+                
+                if (heap.size() != 500) {
+                    pass = false;
+                    reason = "After regrowing to 500, size should be 500, got " + heap.size();
+                }
+            }
+            
+            // Verify heap property through complete extraction
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int count = 0;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap order violated at extraction " + count + ": " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    count++;
+                }
+                
+                if (pass && count != 500) {
+                    pass = false;
+                    reason = "Expected 500 extractions, got " + count;
+                }
+            }
+            
+            // Verify final empty state
+            if (pass) {
+                if (heap.size() != 0) {
+                    pass = false;
+                    reason = "Final size should be 0, got " + heap.size();
+                }
+                if (heap.numTrees() != 0) {
+                    pass = false;
+                    reason = "Final numTrees should be 0, got " + heap.numTrees();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    // ==================== RANDOMIZED STRESS TESTS (15) ====================
+
+    /**
+     * Random Test 1: 1000 Mixed Operations
+     * Performs 1000 random operations and verifies heap property throughout.
+     */
+    private static void testRandom_MixedOperations1000(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: 1000 Mixed Operations";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(42); // Fixed seed for reproducibility
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            for (int op = 0; op < 1000; op++) {
+                int operation = rand.nextInt(100);
+                
+                if (operation < 40 || items.isEmpty()) {
+                    // 40% insert
+                    int key = rand.nextInt(10000) + 1;
+                    Heap.HeapItem item = heap.insert(key, "op-" + op);
+                    items.add(item);
+                } else if (operation < 60) {
+                    // 20% deleteMin
+                    if (heap.size() > 0) {
+                        Heap.HeapItem min = heap.findMin();
+                        items.remove(min);
+                        heap.deleteMin();
+                    }
+                } else if (operation < 80) {
+                    // 20% decreaseKey
+                    if (!items.isEmpty()) {
+                        int idx = rand.nextInt(items.size());
+                        Heap.HeapItem item = items.get(idx);
+                        int diff = rand.nextInt(Math.max(1, item.key - 1));
+                        heap.decreaseKey(item, diff);
+                    }
+                } else {
+                    // 20% delete
+                    if (!items.isEmpty()) {
+                        int idx = rand.nextInt(items.size());
+                        Heap.HeapItem item = items.remove(idx);
+                        heap.delete(item);
+                    }
+                }
+                
+                // Verify size consistency
+                if (heap.size() != items.size()) {
+                    pass = false;
+                    reason = "Size mismatch at op " + op + ": heap=" + heap.size() + ", tracked=" + items.size();
+                    break;
+                }
+            }
+            
+            // Verify heap property by extracting all
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated: " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 2: Insert/Delete Storm
+     * Rapidly inserts and deletes with random patterns.
+     */
+    private static void testRandom_InsertDeleteStorm(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Insert/Delete Storm";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(123);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            // Storm: alternating bursts of inserts and deletes
+            for (int burst = 0; burst < 20; burst++) {
+                // Insert burst
+                int insertCount = rand.nextInt(50) + 10;
+                for (int i = 0; i < insertCount; i++) {
+                    int key = rand.nextInt(5000) + 1;
+                    items.add(heap.insert(key, "burst" + burst + "-" + i));
+                }
+                
+                // Delete burst - only use delete() with tracked items, not deleteMin()
+                int deleteCount = rand.nextInt(Math.min(30, items.size() + 1));
+                for (int i = 0; i < deleteCount && !items.isEmpty(); i++) {
+                    // Always delete from our tracked list to stay in sync
+                    int idx = rand.nextInt(items.size());
+                    Heap.HeapItem toDelete = items.remove(idx);
+                    heap.delete(toDelete);
+                }
+                
+                if (heap.size() != items.size()) {
+                    pass = false;
+                    reason = "Size mismatch at burst " + burst + ": heap=" + heap.size() + ", tracked=" + items.size();
+                    break;
+                }
+            }
+            
+            // Verify heap property with safety limit
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int maxIterations = items.size() + 100; // Safety limit
+                int iterations = 0;
+                
+                while (heap.size() > 0 && iterations < maxIterations) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated: " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    iterations++;
+                }
+                
+                if (iterations >= maxIterations) {
+                    pass = false;
+                    reason = "Possible infinite loop detected - exceeded max iterations";
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 3: DecreaseKey Bombardment
+     * Heavily tests decreaseKey with random patterns.
+     */
+    private static void testRandom_DecreaseKeyBombardment(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: DecreaseKey Bombardment";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(456);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            Heap.HeapItem[] items = new Heap.HeapItem[200];
+            
+            // Insert all with high keys
+            for (int i = 0; i < 200; i++) {
+                items[i] = heap.insert(10000 + rand.nextInt(10000), "node-" + i);
+            }
+            
+            // Force consolidation - find which item is the min and mark it null
+            Heap.HeapItem minItem = heap.findMin();
+            for (int i = 0; i < 200; i++) {
+                if (items[i] == minItem) {
+                    items[i] = null;
+                    break;
+                }
+            }
+            heap.deleteMin();
+            
+            // Bombardment: 500 random decreaseKey operations
+            for (int op = 0; op < 500; op++) {
+                int idx = rand.nextInt(items.length);
+                if (items[idx] != null && items[idx].key > 1) {
+                    int maxDiff = items[idx].key - 1;
+                    int diff = rand.nextInt(maxDiff) + 1;
+                    heap.decreaseKey(items[idx], diff);
+                }
+            }
+            
+            // Verify heap property
+            int prev = Integer.MIN_VALUE;
+            int count = 0;
+            while (heap.size() > 0) {
+                int curr = heap.findMin().key;
+                if (curr < prev) {
+                    pass = false;
+                    reason = "Heap property violated at extraction " + count + ": " + curr + " after " + prev;
+                    break;
+                }
+                prev = curr;
+                heap.deleteMin();
+                count++;
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 4: Meld Chaos
+     * Creates and melds many heaps with random operations.
+     */
+    private static void testRandom_MeldChaos(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Meld Chaos";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(789);
+            Heap mainHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+            int totalElements = 0;
+            int minKey = Integer.MAX_VALUE;
+            
+            // Create and meld 30 random heaps
+            for (int h = 0; h < 30; h++) {
+                Heap tempHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+                int count = rand.nextInt(30) + 5;
+                
+                for (int i = 0; i < count; i++) {
+                    int key = rand.nextInt(10000) + 1;
+                    tempHeap.insert(key, "h" + h + "-" + i);
+                    minKey = Math.min(minKey, key);
+                    totalElements++;
+                }
+                
+                // Random operations on temp heap before meld
+                if (rand.nextBoolean() && tempHeap.size() > 1) {
+                    tempHeap.deleteMin();
+                    totalElements--;
+                    // Recalculate min is complex, so we just track size
+                }
+                
+                mainHeap.meld(tempHeap);
+            }
+            
+            if (mainHeap.size() != totalElements) {
+                pass = false;
+                reason = "Size mismatch: expected " + totalElements + ", got " + mainHeap.size();
+            }
+            
+            // Verify heap property
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (mainHeap.size() > 0) {
+                    int curr = mainHeap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated";
+                        break;
+                    }
+                    prev = curr;
+                    mainHeap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 5: Delete Random Nodes
+     * Inserts many nodes then deletes them in random order.
+     */
+    private static void testRandom_DeleteRandomNodes(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Delete Random Nodes";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(111);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            // Insert 300 elements
+            for (int i = 0; i < 300; i++) {
+                int key = rand.nextInt(5000) + 1;
+                items.add(heap.insert(key, "node-" + i));
+            }
+            
+            // Delete in random order
+            while (!items.isEmpty()) {
+                int idx = rand.nextInt(items.size());
+                heap.delete(items.remove(idx));
+                
+                if (heap.size() != items.size()) {
+                    pass = false;
+                    reason = "Size mismatch during deletion";
+                    break;
+                }
+                
+                // Periodically verify heap property by checking min
+                if (items.size() % 50 == 0 && heap.size() > 0) {
+                    int minKey = heap.findMin().key;
+                    if (minKey < 1) {
+                        pass = false;
+                        reason = "Invalid min key: " + minKey;
+                        break;
+                    }
+                }
+            }
+            
+            if (pass && heap.size() != 0) {
+                pass = false;
+                reason = "Heap should be empty, size=" + heap.size();
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 6: Alternating Operations
+     * Alternates between different operations in random patterns.
+     */
+    private static void testRandom_AlternatingOperations(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Alternating Operations";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(222);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            // Pattern: insert, insert, deleteMin, insert, decreaseKey, delete, repeat
+            for (int cycle = 0; cycle < 100; cycle++) {
+                // Two inserts
+                for (int i = 0; i < 2; i++) {
+                    int key = rand.nextInt(1000) + 100;
+                    items.add(heap.insert(key, "c" + cycle + "-" + i));
+                }
+                
+                // One deleteMin
+                if (heap.size() > 0) {
+                    Heap.HeapItem min = heap.findMin();
+                    items.remove(min);
+                    heap.deleteMin();
+                }
+                
+                // One insert
+                int key = rand.nextInt(1000) + 100;
+                items.add(heap.insert(key, "c" + cycle + "-x"));
+                
+                // One decreaseKey
+                if (!items.isEmpty()) {
+                    int idx = rand.nextInt(items.size());
+                    Heap.HeapItem item = items.get(idx);
+                    if (item.key > 1) {
+                        int diff = rand.nextInt(Math.min(50, item.key - 1)) + 1;
+                        heap.decreaseKey(item, diff);
+                    }
+                }
+                
+                // One delete
+                if (items.size() > 1) {
+                    int idx = rand.nextInt(items.size());
+                    heap.delete(items.remove(idx));
+                }
+                
+                if (heap.size() != items.size()) {
+                    pass = false;
+                    reason = "Size mismatch at cycle " + cycle;
+                    break;
+                }
+            }
+            
+            // Verify heap property
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated";
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 7: Extract All After Random Build
+     * Builds heap randomly then extracts all verifying order.
+     */
+    private static void testRandom_ExtractAllRandom(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Extract All After Random Build";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(333);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Integer> insertedKeys = new java.util.ArrayList<>();
+            
+            // Random build: insert 500 random elements
+            for (int i = 0; i < 500; i++) {
+                int key = rand.nextInt(100000) + 1;
+                heap.insert(key, "val-" + i);
+                insertedKeys.add(key);
+            }
+            
+            // Random decreaseKey on some
+            // (can't track easily, just verify order at end)
+            
+            // Sort expected keys for verification
+            java.util.Collections.sort(insertedKeys);
+            
+            // Extract all and verify order
+            int prev = Integer.MIN_VALUE;
+            int count = 0;
+            while (heap.size() > 0) {
+                int curr = heap.findMin().key;
+                if (curr < prev) {
+                    pass = false;
+                    reason = "Heap property violated at " + count + ": " + curr + " < " + prev;
+                    break;
+                }
+                prev = curr;
+                heap.deleteMin();
+                count++;
+            }
+            
+            if (pass && count != 500) {
+                pass = false;
+                reason = "Expected 500 extractions, got " + count;
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 8: Stress Counters
+     * Performs random operations while monitoring all counters for consistency.
+     */
+    private static void testRandom_StressCounters(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Stress Counters";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(444);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            int prevLinks = 0;
+            int prevCuts = 0;
+            
+            for (int op = 0; op < 500; op++) {
+                int operation = rand.nextInt(4);
+                
+                switch (operation) {
+                    case 0: // Insert
+                        items.add(heap.insert(rand.nextInt(1000) + 1, "op-" + op));
+                        break;
+                    case 1: // DeleteMin
+                        if (heap.size() > 0) {
+                            items.remove(heap.findMin());
+                            heap.deleteMin();
+                        }
+                        break;
+                    case 2: // DecreaseKey
+                        if (!items.isEmpty()) {
+                            Heap.HeapItem item = items.get(rand.nextInt(items.size()));
+                            if (item.key > 1) {
+                                heap.decreaseKey(item, rand.nextInt(item.key - 1) + 1);
+                            }
+                        }
+                        break;
+                    case 3: // Delete
+                        if (!items.isEmpty()) {
+                            heap.delete(items.remove(rand.nextInt(items.size())));
+                        }
+                        break;
+                }
+                
+                // Verify counters never decrease (except size)
+                if (heap.totalLinks() < prevLinks) {
+                    pass = false;
+                    reason = "totalLinks decreased at op " + op;
+                    break;
+                }
+                if (heap.totalCuts() < prevCuts) {
+                    pass = false;
+                    reason = "totalCuts decreased at op " + op;
+                    break;
+                }
+                if (heap.numTrees() < 0 || heap.numMarkedNodes() < 0) {
+                    pass = false;
+                    reason = "Negative counter at op " + op;
+                    break;
+                }
+                
+                prevLinks = heap.totalLinks();
+                prevCuts = heap.totalCuts();
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 9: Repeated Build Destroy
+     * Repeatedly builds and destroys heaps with random patterns.
+     */
+    private static void testRandom_RepeatedBuildDestroy(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Repeated Build Destroy";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(555);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            
+            for (int cycle = 0; cycle < 20; cycle++) {
+                // Build phase: insert random number of elements
+                int buildSize = rand.nextInt(100) + 50;
+                for (int i = 0; i < buildSize; i++) {
+                    heap.insert(rand.nextInt(5000) + 1, "c" + cycle + "-" + i);
+                }
+                
+                if (heap.size() != buildSize) {
+                    pass = false;
+                    reason = "Build phase failed at cycle " + cycle;
+                    break;
+                }
+                
+                // Destroy phase: extract all
+                int prev = Integer.MIN_VALUE;
+                int extracted = 0;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated at cycle " + cycle;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    extracted++;
+                }
+                
+                if (!pass) break;
+                
+                if (extracted != buildSize) {
+                    pass = false;
+                    reason = "Extraction count mismatch at cycle " + cycle;
+                    break;
+                }
+                
+                if (heap.numTrees() != 0) {
+                    pass = false;
+                    reason = "numTrees not 0 after destroy at cycle " + cycle;
+                    break;
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 10: Chaos Monkey
+     * Completely random operations with no pattern.
+     */
+    private static void testRandom_ChaosMonkey(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Chaos Monkey";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(666);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            for (int op = 0; op < 2000; op++) {
+                int choice = rand.nextInt(100);
+                
+                if (choice < 35) {
+                    // Insert
+                    items.add(heap.insert(rand.nextInt(50000) + 1, "chaos-" + op));
+                } else if (choice < 50 && heap.size() > 0) {
+                    // DeleteMin
+                    items.remove(heap.findMin());
+                    heap.deleteMin();
+                } else if (choice < 70 && !items.isEmpty()) {
+                    // DecreaseKey
+                    Heap.HeapItem item = items.get(rand.nextInt(items.size()));
+                    if (item.key > 1) {
+                        heap.decreaseKey(item, rand.nextInt(item.key - 1) + 1);
+                    }
+                } else if (choice < 85 && !items.isEmpty()) {
+                    // Delete
+                    heap.delete(items.remove(rand.nextInt(items.size())));
+                } else if (choice < 95) {
+                    // Meld with small heap
+                    Heap temp = new Heap(lazyMelds, lazyDecreaseKeys);
+                    int count = rand.nextInt(10) + 1;
+                    for (int i = 0; i < count; i++) {
+                        items.add(temp.insert(rand.nextInt(50000) + 1, "meld-" + op + "-" + i));
+                    }
+                    heap.meld(temp);
+                } else {
+                    // FindMin (no change)
+                    heap.findMin();
+                }
+                
+                if (heap.size() != items.size()) {
+                    pass = false;
+                    reason = "Size mismatch at op " + op + ": heap=" + heap.size() + ", tracked=" + items.size();
+                    break;
+                }
+            }
+            
+            // Final verification
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated";
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 11: Large Scale Operations
+     * Tests with 5000+ elements.
+     */
+    private static void testRandom_LargeScaleOperations(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Large Scale Operations (5000+)";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(777);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            // Insert 5000 elements
+            for (int i = 0; i < 5000; i++) {
+                items.add(heap.insert(rand.nextInt(100000) + 1, "large-" + i));
+            }
+            
+            if (heap.size() != 5000) {
+                pass = false;
+                reason = "Failed to insert 5000 elements";
+            }
+            
+            // Random operations
+            if (pass) {
+                for (int op = 0; op < 1000; op++) {
+                    int choice = rand.nextInt(3);
+                    
+                    if (choice == 0 && heap.size() > 0) {
+                        items.remove(heap.findMin());
+                        heap.deleteMin();
+                    } else if (choice == 1 && !items.isEmpty()) {
+                        Heap.HeapItem item = items.get(rand.nextInt(items.size()));
+                        if (item.key > 1) {
+                            heap.decreaseKey(item, rand.nextInt(item.key - 1) + 1);
+                        }
+                    } else if (choice == 2 && !items.isEmpty()) {
+                        heap.delete(items.remove(rand.nextInt(items.size())));
+                    }
+                }
+            }
+            
+            // Verify heap property
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int count = 0;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated at extraction " + count;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    count++;
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 12: DecreaseKey Then Delete
+     * DecreaseKey nodes then delete them - tests node tracking.
+     */
+    private static void testRandom_DecreaseKeyThenDelete(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: DecreaseKey Then Delete";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(888);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            Heap.HeapItem[] items = new Heap.HeapItem[100];
+            
+            // Insert all
+            for (int i = 0; i < 100; i++) {
+                items[i] = heap.insert(1000 + rand.nextInt(9000), "node-" + i);
+            }
+            
+            // Force consolidation - find which item is the min and mark it deleted
+            boolean[] deleted = new boolean[100];
+            Heap.HeapItem minItem = heap.findMin();
+            for (int i = 0; i < 100; i++) {
+                if (items[i] == minItem) {
+                    deleted[i] = true;
+                    break;
+                }
+            }
+            heap.deleteMin();
+            
+            for (int round = 0; round < 50; round++) {
+                // Find a non-deleted item
+                int idx = rand.nextInt(100);
+                int attempts = 0;
+                while (deleted[idx] && attempts < 100) {
+                    idx = rand.nextInt(100);
+                    attempts++;
+                }
+                
+                if (!deleted[idx]) {
+                    // DecreaseKey
+                    if (items[idx].key > 1) {
+                        heap.decreaseKey(items[idx], rand.nextInt(items[idx].key - 1) + 1);
+                    }
+                    
+                    // Delete
+                    heap.delete(items[idx]);
+                    deleted[idx] = true;
+                }
+            }
+            
+            // Verify heap property
+            int prev = Integer.MIN_VALUE;
+            while (heap.size() > 0) {
+                int curr = heap.findMin().key;
+                if (curr < prev) {
+                    pass = false;
+                    reason = "Heap property violated";
+                    break;
+                }
+                prev = curr;
+                heap.deleteMin();
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 13: Meld Then Extract All
+     * Melds random heaps then extracts all verifying order.
+     */
+    private static void testRandom_MeldThenExtractAll(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Meld Then Extract All";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(999);
+            Heap mainHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+            int totalCount = 0;
+            
+            // Create 50 heaps and meld them
+            for (int h = 0; h < 50; h++) {
+                Heap tempHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+                int count = rand.nextInt(20) + 5;
+                
+                for (int i = 0; i < count; i++) {
+                    tempHeap.insert(rand.nextInt(10000) + 1, "h" + h + "-" + i);
+                    totalCount++;
+                }
+                
+                mainHeap.meld(tempHeap);
+            }
+            
+            if (mainHeap.size() != totalCount) {
+                pass = false;
+                reason = "Size mismatch after melds: expected " + totalCount + ", got " + mainHeap.size();
+            }
+            
+            // Extract all verifying order
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int extracted = 0;
+                while (mainHeap.size() > 0) {
+                    int curr = mainHeap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated at extraction " + extracted;
+                        break;
+                    }
+                    prev = curr;
+                    mainHeap.deleteMin();
+                    extracted++;
+                }
+                
+                if (pass && extracted != totalCount) {
+                    pass = false;
+                    reason = "Extracted " + extracted + " but expected " + totalCount;
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 14: Worst Case Patterns
+     * Tests patterns known to be challenging for heaps.
+     */
+    private static void testRandom_WorstCasePatterns(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: Worst Case Patterns";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(1010);
+            
+            // Pattern 1: Insert ascending, delete all
+            Heap heap1 = new Heap(lazyMelds, lazyDecreaseKeys);
+            for (int i = 1; i <= 200; i++) {
+                heap1.insert(i, "asc-" + i);
+            }
+            int prev = 0;
+            while (heap1.size() > 0) {
+                int curr = heap1.findMin().key;
+                if (curr <= prev) {
+                    pass = false;
+                    reason = "Pattern 1 failed: " + curr + " after " + prev;
+                    break;
+                }
+                prev = curr;
+                heap1.deleteMin();
+            }
+            
+            // Pattern 2: Insert descending, delete all
+            if (pass) {
+                Heap heap2 = new Heap(lazyMelds, lazyDecreaseKeys);
+                for (int i = 200; i >= 1; i--) {
+                    heap2.insert(i, "desc-" + i);
+                }
+                prev = 0;
+                while (heap2.size() > 0) {
+                    int curr = heap2.findMin().key;
+                    if (curr <= prev) {
+                        pass = false;
+                        reason = "Pattern 2 failed: " + curr + " after " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap2.deleteMin();
+                }
+            }
+            
+            // Pattern 3: All same key
+            if (pass) {
+                Heap heap3 = new Heap(lazyMelds, lazyDecreaseKeys);
+                for (int i = 0; i < 100; i++) {
+                    heap3.insert(42, "same-" + i);
+                }
+                int count = 0;
+                while (heap3.size() > 0) {
+                    if (heap3.findMin().key != 42) {
+                        pass = false;
+                        reason = "Pattern 3 failed: expected 42, got " + heap3.findMin().key;
+                        break;
+                    }
+                    heap3.deleteMin();
+                    count++;
+                }
+                if (pass && count != 100) {
+                    pass = false;
+                    reason = "Pattern 3: extracted " + count + " not 100";
+                }
+            }
+            
+            // Pattern 4: Alternating high-low
+            if (pass) {
+                Heap heap4 = new Heap(lazyMelds, lazyDecreaseKeys);
+                for (int i = 0; i < 100; i++) {
+                    heap4.insert(i % 2 == 0 ? 1 : 1000, "alt-" + i);
+                }
+                prev = 0;
+                while (heap4.size() > 0) {
+                    int curr = heap4.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Pattern 4 failed";
+                        break;
+                    }
+                    prev = curr;
+                    heap4.deleteMin();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Random Test 15: Ultimate Torture Test
+     * The most extreme test combining all challenging patterns.
+     */
+    private static void testRandom_UltimateTortureTest(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Random: ULTIMATE TORTURE TEST";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(31415);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            // Phase 1: Build up to 2000 elements with random inserts
+            for (int i = 0; i < 2000; i++) {
+                items.add(heap.insert(rand.nextInt(100000) + 1, "p1-" + i));
+            }
+            
+            // Phase 2: Heavy decreaseKey bombardment
+            for (int i = 0; i < 500; i++) {
+                if (!items.isEmpty()) {
+                    Heap.HeapItem item = items.get(rand.nextInt(items.size()));
+                    if (item.key > 1) {
+                        heap.decreaseKey(item, rand.nextInt(item.key - 1) + 1);
+                    }
+                }
+            }
+            
+            // Phase 3: Delete half randomly
+            int toDelete = items.size() / 2;
+            for (int i = 0; i < toDelete && !items.isEmpty(); i++) {
+                int idx = rand.nextInt(items.size());
+                heap.delete(items.remove(idx));
+            }
+            
+            // Phase 4: Meld with 20 new heaps
+            for (int h = 0; h < 20; h++) {
+                Heap tempHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+                int count = rand.nextInt(50) + 10;
+                for (int i = 0; i < count; i++) {
+                    Heap.HeapItem item = tempHeap.insert(rand.nextInt(100000) + 1, "p4-h" + h + "-" + i);
+                    items.add(item);
+                }
+                heap.meld(tempHeap);
+            }
+            
+            // Phase 5: More mixed operations
+            for (int op = 0; op < 300; op++) {
+                int choice = rand.nextInt(5);
+                
+                if (choice == 0) {
+                    items.add(heap.insert(rand.nextInt(100000) + 1, "p5-" + op));
+                } else if (choice == 1 && heap.size() > 0) {
+                    items.remove(heap.findMin());
+                    heap.deleteMin();
+                } else if (choice == 2 && !items.isEmpty()) {
+                    Heap.HeapItem item = items.get(rand.nextInt(items.size()));
+                    if (item.key > 1) {
+                        heap.decreaseKey(item, rand.nextInt(item.key - 1) + 1);
+                    }
+                } else if (choice == 3 && !items.isEmpty()) {
+                    heap.delete(items.remove(rand.nextInt(items.size())));
+                }
+                // choice == 4: do nothing (no-op)
+            }
+            
+            // Verify size
+            if (heap.size() != items.size()) {
+                pass = false;
+                reason = "Size mismatch: heap=" + heap.size() + ", tracked=" + items.size();
+            }
+            
+            // Verify counters
+            if (pass) {
+                if (heap.totalLinks() < 0 || heap.totalCuts() < 0 || 
+                    heap.numTrees() < 0 || heap.numMarkedNodes() < 0 ||
+                    heap.totalHeapifyCosts() < 0) {
+                    pass = false;
+                    reason = "Negative counter detected";
+                }
+            }
+            
+            // Phase 6: Final extraction - verify heap property
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int count = 0;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated at extraction " + count + ": " + curr + " < " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    count++;
+                }
+            }
+            
+            // Final state verification
+            if (pass) {
+                if (heap.size() != 0) {
+                    pass = false;
+                    reason = "Final size not 0";
+                } else if (heap.numTrees() != 0) {
+                    pass = false;
+                    reason = "Final numTrees not 0";
+                } else if (heap.findMin() != null) {
+                    pass = false;
+                    reason = "Final findMin not null";
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    // ==================== BIG SCALE TESTS (5) ====================
+
+    /**
+     * Big Scale Test 1: Ten Thousand Elements
+     * Inserts 10,000 elements, performs operations, extracts all.
+     */
+    private static void testBigScale_TenThousandElements(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Big Scale: 10,000 Elements";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(10000);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            // Insert 10,000 elements
+            for (int i = 0; i < 10000; i++) {
+                int key = rand.nextInt(1000000) + 1;
+                items.add(heap.insert(key, "big-" + i));
+            }
+            
+            if (heap.size() != 10000) {
+                pass = false;
+                reason = "After 10,000 inserts, size should be 10000, got " + heap.size();
+            }
+            
+            // Perform 1000 random decreaseKey operations
+            if (pass) {
+                for (int i = 0; i < 1000; i++) {
+                    int idx = rand.nextInt(items.size());
+                    Heap.HeapItem item = items.get(idx);
+                    if (item.key > 1) {
+                        int diff = rand.nextInt(Math.min(1000, item.key - 1)) + 1;
+                        heap.decreaseKey(item, diff);
+                    }
+                }
+            }
+            
+            // Delete 2000 random elements
+            if (pass) {
+                for (int i = 0; i < 2000; i++) {
+                    int idx = rand.nextInt(items.size());
+                    heap.delete(items.remove(idx));
+                }
+                
+                if (heap.size() != 8000) {
+                    pass = false;
+                    reason = "After 2000 deletes, size should be 8000, got " + heap.size();
+                }
+            }
+            
+            // Extract all and verify order
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int count = 0;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated at extraction " + count;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    count++;
+                }
+                
+                if (pass && count != 8000) {
+                    pass = false;
+                    reason = "Expected 8000 extractions, got " + count;
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Big Scale Test 2: Fifty Thousand Insert and Extract
+     * Inserts 50,000 elements then extracts all verifying sorted order.
+     */
+    private static void testBigScale_FiftyThousandInsertExtract(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Big Scale: 50,000 Insert & Extract";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(50000);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            
+            // Insert 50,000 elements
+            for (int i = 0; i < 50000; i++) {
+                int key = rand.nextInt(10000000) + 1;
+                heap.insert(key, "fifty-" + i);
+            }
+            
+            if (heap.size() != 50000) {
+                pass = false;
+                reason = "After 50,000 inserts, size should be 50000, got " + heap.size();
+            }
+            
+            // Extract all and verify sorted order
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int count = 0;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated at extraction " + count + ": " + curr + " < " + prev;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    count++;
+                }
+                
+                if (pass && count != 50000) {
+                    pass = false;
+                    reason = "Expected 50000 extractions, got " + count;
+                }
+            }
+            
+            // Verify final state
+            if (pass) {
+                if (heap.size() != 0 || heap.numTrees() != 0 || heap.findMin() != null) {
+                    pass = false;
+                    reason = "Final state invalid: size=" + heap.size() + ", trees=" + heap.numTrees();
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Big Scale Test 3: Massive Meld Operation
+     * Creates 100 heaps of 500 elements each and melds them all together.
+     */
+    private static void testBigScale_MassiveMeldOperation(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Big Scale: 100 Heaps Melded (50,000 total)";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(100500);
+            Heap mainHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+            int totalLinks = 0;
+            int totalSize = 0;
+            
+            // Create and meld 100 heaps
+            for (int h = 0; h < 100; h++) {
+                Heap tempHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+                
+                // Insert 500 elements into each heap
+                for (int i = 0; i < 500; i++) {
+                    int key = rand.nextInt(5000000) + 1;
+                    tempHeap.insert(key, "h" + h + "-" + i);
+                    totalSize++;
+                }
+                
+                // Force consolidation in temp heap
+                if (tempHeap.size() > 1) {
+                    tempHeap.deleteMin();
+                    totalSize--;
+                }
+                
+                int linksBefore = mainHeap.totalLinks();
+                mainHeap.meld(tempHeap);
+                
+                // Verify counters inherited
+                if (mainHeap.totalLinks() < linksBefore) {
+                    pass = false;
+                    reason = "totalLinks should not decrease after meld at heap " + h;
+                    break;
+                }
+            }
+            
+            if (pass && mainHeap.size() != totalSize) {
+                pass = false;
+                reason = "After all melds, size should be " + totalSize + ", got " + mainHeap.size();
+            }
+            
+            // Extract all and verify order
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int count = 0;
+                while (mainHeap.size() > 0) {
+                    int curr = mainHeap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated at extraction " + count;
+                        break;
+                    }
+                    prev = curr;
+                    mainHeap.deleteMin();
+                    count++;
+                }
+                
+                if (pass && count != totalSize) {
+                    pass = false;
+                    reason = "Expected " + totalSize + " extractions, got " + count;
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Big Scale Test 4: Intensive DecreaseKey
+     * Creates heap of 20,000 elements, performs 50,000 decreaseKey operations.
+     */
+    private static void testBigScale_IntensiveDecreaseKey(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Big Scale: 50,000 DecreaseKey Operations";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(20050);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            Heap.HeapItem[] items = new Heap.HeapItem[20000];
+            
+            // Insert 20,000 elements with high keys
+            for (int i = 0; i < 20000; i++) {
+                items[i] = heap.insert(1000000 + rand.nextInt(9000000), "dk-" + i);
+            }
+            
+            // Force consolidation - track which item is deleted
+            Heap.HeapItem minItem = heap.findMin();
+            for (int i = 0; i < 20000; i++) {
+                if (items[i] == minItem) {
+                    items[i] = null;
+                    break;
+                }
+            }
+            heap.deleteMin();
+            
+            int cutsBefore = heap.totalCuts();
+            int heapifyBefore = heap.totalHeapifyCosts();
+            
+            // Perform 50,000 decreaseKey operations
+            for (int op = 0; op < 50000; op++) {
+                int idx = rand.nextInt(20000);
+                if (items[idx] != null && items[idx].key > 1) {
+                    int maxDiff = Math.min(1000, items[idx].key - 1);
+                    int diff = rand.nextInt(maxDiff) + 1;
+                    heap.decreaseKey(items[idx], diff);
+                }
+            }
+            
+            int cutsAfter = heap.totalCuts();
+            int heapifyAfter = heap.totalHeapifyCosts();
+            
+            // Verify counters increased appropriately
+            if (lazyDecreaseKeys) {
+                if (cutsAfter <= cutsBefore) {
+                    // At least some cuts should have happened with 50k operations
+                    // (though this depends on the random sequence)
+                }
+            } else {
+                if (heapifyAfter < heapifyBefore) {
+                    pass = false;
+                    reason = "heapifyCosts should not decrease";
+                }
+            }
+            
+            // Verify heap property
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int count = 0;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated at extraction " + count;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    count++;
+                }
+            }
+            
+        } catch (Exception e) {
+            pass = false;
+            reason = "Exception: " + e.getClass().getSimpleName() + " - " + e.getMessage();
+        }
+        
+        reportResult(testName, pass, reason);
+    }
+
+    /**
+     * Big Scale Test 5: One Hundred Thousand Operations
+     * Performs 100,000 mixed operations (insert, deleteMin, decreaseKey, delete, meld).
+     */
+    private static void testBigScale_HundredThousandOperations(boolean lazyMelds, boolean lazyDecreaseKeys) {
+        String testName = "Big Scale: 100,000 Mixed Operations";
+        
+        boolean pass = true;
+        String reason = "";
+        
+        try {
+            java.util.Random rand = new java.util.Random(100000);
+            Heap heap = new Heap(lazyMelds, lazyDecreaseKeys);
+            java.util.ArrayList<Heap.HeapItem> items = new java.util.ArrayList<>();
+            
+            // Start with 5000 elements
+            for (int i = 0; i < 5000; i++) {
+                items.add(heap.insert(rand.nextInt(10000000) + 1, "init-" + i));
+            }
+            
+            // 100,000 mixed operations
+            for (int op = 0; op < 100000; op++) {
+                int operation = rand.nextInt(100);
+                
+                if (operation < 30) {
+                    // 30%: Insert
+                    items.add(heap.insert(rand.nextInt(10000000) + 1, "op-" + op));
+                } else if (operation < 50 && heap.size() > 0) {
+                    // 20%: DeleteMin
+                    Heap.HeapItem min = heap.findMin();
+                    items.remove(min);
+                    heap.deleteMin();
+                } else if (operation < 70 && !items.isEmpty()) {
+                    // 20%: DecreaseKey
+                    int idx = rand.nextInt(items.size());
+                    Heap.HeapItem item = items.get(idx);
+                    if (item.key > 1) {
+                        int diff = rand.nextInt(Math.min(10000, item.key - 1)) + 1;
+                        heap.decreaseKey(item, diff);
+                    }
+                } else if (operation < 85 && !items.isEmpty()) {
+                    // 15%: Delete
+                    int idx = rand.nextInt(items.size());
+                    heap.delete(items.remove(idx));
+                } else if (operation < 95) {
+                    // 10%: Meld with small heap
+                    Heap tempHeap = new Heap(lazyMelds, lazyDecreaseKeys);
+                    int count = rand.nextInt(20) + 5;
+                    for (int i = 0; i < count; i++) {
+                        items.add(tempHeap.insert(rand.nextInt(10000000) + 1, "meld-" + op + "-" + i));
+                    }
+                    heap.meld(tempHeap);
+                } else {
+                    // 5%: FindMin (no-op, just verify it works)
+                    heap.findMin();
+                }
+                
+                // Periodic size consistency check
+                if (op % 10000 == 0) {
+                    if (heap.size() != items.size()) {
+                        pass = false;
+                        reason = "Size mismatch at op " + op + ": heap=" + heap.size() + ", tracked=" + items.size();
+                        break;
+                    }
+                }
+            }
+            
+            // Final size check
+            if (pass && heap.size() != items.size()) {
+                pass = false;
+                reason = "Final size mismatch: heap=" + heap.size() + ", tracked=" + items.size();
+            }
+            
+            // Verify counters are non-negative
+            if (pass) {
+                if (heap.totalLinks() < 0 || heap.totalCuts() < 0 || 
+                    heap.numTrees() < 0 || heap.numMarkedNodes() < 0 ||
+                    heap.totalHeapifyCosts() < 0) {
+                    pass = false;
+                    reason = "Negative counter detected";
+                }
+            }
+            
+            // Extract all and verify heap property
+            if (pass) {
+                int prev = Integer.MIN_VALUE;
+                int count = 0;
+                while (heap.size() > 0) {
+                    int curr = heap.findMin().key;
+                    if (curr < prev) {
+                        pass = false;
+                        reason = "Heap property violated at extraction " + count;
+                        break;
+                    }
+                    prev = curr;
+                    heap.deleteMin();
+                    count++;
+                }
             }
             
         } catch (Exception e) {

@@ -295,48 +295,78 @@ public class Heap
         HeapNode startNode = this.min.node;
         HeapNode currNode = startNode;
         HeapNode nextNode;
+        int treesToProcess = this.numOfTrees;
 
         /// successive linking
-        do {
+        for(int t = 0; t < treesToProcess; t++) {
             nextNode = currNode.next;
-            int currRank = currNode.rank;
-            if(arr[currRank] == null){
-                arr[currRank] = currNode;
-            } else {
-                while(arr[currRank] != null){
-                    /// link the two trees
-                    this.numOfTrees--;
-                    this.totalLinks++;
-                    
-                    // find smaller and bigger
-                    HeapNode smaller = Integer.compare(arr[currRank].item.key, currNode.item.key) <= 0 ? arr[currRank] : currNode;
-                    HeapNode bigger = Integer.compare(arr[currRank].item.key, currNode.item.key) > 0 ? arr[currRank] : currNode;
-    
-                    arr[currRank] = null;                
-                    // disconnecting from roots list
-                    bigger.next.prev = bigger.prev;
-                    bigger.prev.next = bigger.next;
-                    bigger.next = bigger;
-                    bigger.prev = bigger;
-                    // adding to smaller childs list
-                    if(smaller.child != null){
-                        bigger.prev = smaller.child.prev;
-                        bigger.next = smaller.child;
-                        smaller.child.prev.next = bigger;
-                        smaller.child.prev = bigger;
-                    }
-                    // connect to smaller as parent
-                    bigger.parent = smaller;
-                    smaller.child = bigger;
-                    smaller.rank++;
 
-                    currNode = smaller;
-                    currRank = smaller.rank;
-                } 
-                arr[currRank] = currNode;   
-            }
+            int currRank = currNode.rank;
+
+            // disconnecting from roots list
+            currNode.next.prev = currNode.prev;
+            currNode.prev.next = currNode.next;
+            currNode.next = currNode;
+            currNode.prev = currNode;
+        
+            while(arr[currRank] != null){
+                /// link the two trees
+                this.numOfTrees--;
+                this.totalLinks++;
+                
+                // find smaller and bigger
+                HeapNode smaller = Integer.compare(arr[currRank].item.key, currNode.item.key) < 0 ? arr[currRank] : currNode;
+                HeapNode bigger = Integer.compare(arr[currRank].item.key, currNode.item.key) >= 0 ? arr[currRank] : currNode;
+                
+                arr[currRank] = null;
+                
+                // adding to smaller childs list
+                if(smaller.child != null){
+                    bigger.prev = smaller.child.prev;
+                    bigger.next = smaller.child;
+                    smaller.child.prev.next = bigger;
+                    smaller.child.prev = bigger;
+                }
+                // connect to smaller as parent
+                bigger.parent = smaller;
+                smaller.child = bigger;
+                smaller.rank++;
+
+                currNode = smaller;
+                currRank = smaller.rank;
+            } 
+
+            arr[currRank] = currNode;   
+        
             currNode = nextNode;
-        } while (nextNode != startNode);
+        }
+        HeapNode newMin = null;
+    HeapNode first = null;
+    HeapNode last = null;
+    this.numOfTrees = 0;
+    
+    for (int i = 0; i < logN; i++) {
+        if (arr[i] != null) {
+            this.numOfTrees++;
+            arr[i].parent = null;
+            if (first == null) {
+                first = arr[i];
+                last = arr[i];
+                first.next = first;
+                first.prev = first;
+            } else {
+                arr[i].prev = last;
+                arr[i].next = first;
+                last.next = arr[i];
+                first.prev = arr[i];
+                last = arr[i];
+            }
+            if (newMin == null || arr[i].item.key < newMin.item.key) {
+                newMin = arr[i];
+            }
+        }
+    }
+    this.min = newMin != null ? newMin.item : null;
         
     }
 
@@ -360,7 +390,7 @@ public class Heap
 
         // create heap for meld
         Heap nodeHeap = new Heap(this.lazyMelds, this.lazyDecreaseKeys);
-        nodeHeap.min.node = node;
+        nodeHeap.min = node.item;
         nodeHeap.numOfTrees = 1;
         this.meld(nodeHeap);
         // add 1 to total cuts
